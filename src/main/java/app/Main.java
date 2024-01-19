@@ -1,10 +1,15 @@
 package app;
 
+import com.mongodb.client.MongoClient;
+
+import db.MongoDriver;
+
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		MongoClient client = MongoDriver.getClient();
 
+		client.getDatabase("MongoRipheral");
 	}
 
 }
