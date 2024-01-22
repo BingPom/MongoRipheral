@@ -1,6 +1,5 @@
 package model;
 
-import enums.PeripheralType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,10 +12,10 @@ public class Peripheral {
 	private String name;
 	private Double price;
 	private String description;
-	private PeripheralType type;
+	private String brand;
 
 	public String toString() {
-		return name + " -> [ Tipo: " + type.toString() + ", Precio: " + price.toString() + ", Descripcion: "
-				+ description + "]";
+		return name + "\t➡\n\tMarca: " + brand + "\n\tPrecio: " + price.toString() + "\n\tDescripcion: " + description
+				+ "\n";
 	}
 }
