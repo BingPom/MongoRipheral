@@ -1,5 +1,5 @@
 package enums;
 
-public enum Switches {
+public enum KBSwitches {
 	RED, BROWN, BLUE, LINEAR, TACTILE
 }

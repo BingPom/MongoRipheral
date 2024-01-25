@@ -1,5 +1,5 @@
 package enums;
 
-public enum Layout {
+public enum KBLayout {
 	ISO, ANSI
 }
