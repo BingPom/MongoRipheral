@@ -4,10 +4,15 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 
 import db.MongoDriver;
+import enums.AudioType;
+import enums.Connectivity;
 import enums.KBLayout;
 import enums.KBSize;
 import enums.KBSwitches;
+import enums.MSensorType;
+import model.Headset;
 import model.Keyboard;
+import model.Mouse;
 import model.Peripheral;
 
 public class Main {
@@ -26,6 +31,16 @@ public class Main {
 				.description("Descripción del teclado").layout(KBLayout.ISO).size(KBSize.TKL).switches(KBSwitches.RED)
 				.build();
 		System.out.println(kb);
+
+		Peripheral mouse = Mouse.builder().name("Nombre del mouse").price(100.0).brand("Marca del mouse")
+				.description("Descripción del mouse").connectivity(Connectivity.WIRED).sensorType(MSensorType.OPTICAL)
+				.sensor("Nombre del sensor").build();
+		System.out.println(mouse);
+
+		Peripheral hs = Headset.builder().name("Nombre del casco").price(100.0).brand("Marca del casco")
+				.description("Descripción del casco").connectivity(Connectivity.WIRELESS)
+				.audio(AudioType.SUROOUND_SEVEN_ONE).build();
+		System.out.println(hs);
 	}
 
 }

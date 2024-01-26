@@ -1,5 +1,5 @@
 package enums;
 
 public enum AudioType {
-	MONO, STEREO, FIVE_POINT_ONE, SEVEN_POINT_ONE
+	MONO, STEREO, SURROUND_FIVE_ONE, SUROOUND_SEVEN_ONE
 }
