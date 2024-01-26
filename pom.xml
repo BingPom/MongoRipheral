@@ -38,6 +38,5 @@
 			<artifactId>mongodb-driver-sync</artifactId>
 			<version>4.11.1</version>
 		</dependency>
-
 	</dependencies>
 </project>
