@@ -30,7 +30,6 @@ public class Main {
 		Peripheral test = Peripheral.builder().name("Nombre del periférico").price(100.0).brand("Marca del periférico")
 				.description("Descripción del periférico").build();
 		System.out.println(test.toString());
-<<<<<<< Updated upstream
 
 		Peripheral kb = Keyboard.builder().name("Nombre del teclado").price(100.0).brand("Marca del teclado")
 				.description("Descripción del teclado").layout(KBLayout.ISO).size(KBSize.TKL).switches(KBSwitches.RED)
@@ -46,7 +45,6 @@ public class Main {
 				.description("Descripción del casco").connectivity(Connectivity.WIRELESS)
 				.audio(AudioType.SUROOUND_SEVEN_ONE).build();
 		System.out.println(hs);
-=======
 		
 //		Start GUI
 		try {
@@ -65,7 +63,6 @@ public class Main {
 			e.printStackTrace();
 		}
 		new MainWindow().setVisible(true);
->>>>>>> Stashed changes
 	}
 
 }
