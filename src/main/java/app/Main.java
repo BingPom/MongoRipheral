@@ -1,5 +1,6 @@
 package app;
 
+import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -62,7 +63,6 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		new MainWindow().setVisible(true);
+		new MainWindow();
 	}
-
 }
