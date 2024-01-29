@@ -1,25 +1,23 @@
 package controller;
 
-import javax.swing.text.Document;
+import java.util.List;
 
-import lombok.NoArgsConstructor;
+import org.bson.Document;
+
 import model.Peripheral;
 
-@NoArgsConstructor
-public class PeripheralController {
-	public void insert(Peripheral peripheral) {
-		Document doc;
-	}
+public interface PeripheralController {
 
-	public void delete(String id) {
-		Document doc;
-	}
+	public void insert(Peripheral peripheral);
 
-	public void findAll() {
+	public List<Peripheral> findAll();
 
-	}
+	public Peripheral findByName(String name);
 
-	public void update(Peripheral peripheral) {
-		Document doc;
-	}
+	public void update(String name, Peripheral updatedPeripheral);
+
+	public void delete(String name);
+
+	Peripheral documentToPeripheral(Document document);
+
 }
