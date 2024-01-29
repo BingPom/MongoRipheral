@@ -1,5 +1,6 @@
 package app;
 
+import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -25,7 +26,6 @@ public class Main {
 		} catch (UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		new MainWindow().setVisible(true);
+		new MainWindow();
 	}
-
 }

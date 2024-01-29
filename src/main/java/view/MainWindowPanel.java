@@ -14,11 +14,14 @@ import java.awt.event.ActionEvent;
 public class MainWindowPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	private MainWindow parent;
 
 	/**
 	 * Create the panel.
 	 */
 	public MainWindowPanel(MainWindow frame) {
+		parent = frame;
+		setLayout(null);
 
 		JButton btnUpdate = new JButton("Actualizar");
 		btnUpdate.setBounds(218, 133, 79, 23);
@@ -29,7 +32,7 @@ public class MainWindowPanel extends JPanel {
 		JButton btnSearch = new JButton("Buscar");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.goToCard(Windows.Search_Main_Window);
+				parent.goToCard(Windows.Search_Main_Window);
 			}
 		});
 		btnSearch.setBounds(20, 133, 79, 23);

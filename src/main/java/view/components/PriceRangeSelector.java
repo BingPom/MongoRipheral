@@ -1,75 +1,130 @@
 package view.components;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.JSpinner;
 import javax.swing.JLabel;
 import javax.swing.SpinnerNumberModel;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 
-public class PriceRangeSelector extends JFrame {
+public class PriceRangeSelector extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PriceRangeSelector frame = new PriceRangeSelector();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	private double cielingPrice;
+	private double minPrice;
+	private double maxPrice;
+
+	public double getMinPrice() {
+		return minPrice;
+	}
+	public double getMaxPrice() {
+		return maxPrice;
+	}
+	public double getCielingPrice() {
+		return cielingPrice;
+	}
+	public void setCielingPrice(double cielingPrice) {
+		this.cielingPrice = cielingPrice;
+	}
+	public void setMinPrice(double minPrice) {
+//		Check below zero
+		if (minPrice < 0) {
+			this.minPrice = 0;
+			return;
+		}
+//		Check above cieling
+		if (minPrice > this.getCielingPrice()) {
+			this.minPrice = this.getCielingPrice();
+			return;
+		}
+//		Check above current max price
+		if (minPrice > this.getMaxPrice()) {
+			this.minPrice = this.getMaxPrice();
+			return;
+		}
+//		If all checks passed, assign new value
+		this.minPrice = minPrice;
+	}
+	public void setMaxPrice(double maxPrice) {
+//		Check below zero
+		if (maxPrice < 0) {
+			this.maxPrice = 0;
+			return;
+		}
+//		Check above cieling
+		if (maxPrice > this.getCielingPrice()) {
+			this.maxPrice = this.getCielingPrice();
+			return;
+		}
+//		Check below current min price
+		if (maxPrice < this.getMinPrice()) {
+			this.maxPrice = this.getMinPrice();
+			return;
+		}
+//		If all checks passed, assign new value
+		this.maxPrice = maxPrice;
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the component.
 	 */
-	public PriceRangeSelector() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+	public PriceRangeSelector(double startingMinPrice, double startingMaxPrice, double cielingPrice) {
+//		Assign to attributes
+		this.setMinPrice(startingMinPrice);
+		this.setMaxPrice(startingMaxPrice);
+		this.setCielingPrice(cielingPrice);
+		
+//		"Desde" label
+		JLabel lblLeftSide = new JLabel("desde ");
+		add(lblLeftSide);
 
-		setContentPane(contentPane);
-		
-		
-		
-		JLabel lblLeftSide = new JLabel("Desde ");
-		contentPane.add(lblLeftSide);
-		
-		SpinnerNumberModel priceSpinnerModelMinPrice = new SpinnerNumberModel(0d, 0d, 500d, 1.00d);
+//		First Spinner
+		SpinnerNumberModel priceSpinnerModelMinPrice = new SpinnerNumberModel(startingMinPrice, 0d, cielingPrice, 1.00d);
 		JSpinner spinnerMinPrice = new JSpinner(priceSpinnerModelMinPrice);
-		spinnerMinPrice.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-					priceSpinnerModelMinPrice.setValue(spinnerMinPrice.getMaximumSize());
+		spinnerMinPrice.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				setMinPrice((double) spinnerMinPrice.getValue());
+				spinnerMinPrice.setValue(getMinPrice());
 			}
 		});
 		JSpinner.NumberEditor editorMinPrice = new JSpinner.NumberEditor(spinnerMinPrice, "#,##0.00");
 		JFormattedTextField textFieldMinPrice = editorMinPrice.getTextField();
 		textFieldMinPrice.setColumns(4);
-        spinnerMinPrice.setEditor(editorMinPrice);
-		contentPane.add(spinnerMinPrice);
-		
+		spinnerMinPrice.setEditor(editorMinPrice);
+		add(spinnerMinPrice);
+
+//		"hasta" label
 		JLabel lblInBetween = new JLabel(" hasta ");
-		contentPane.add(lblInBetween);
+		add(lblInBetween);
 		
-		JSpinner spinnerMaxPrice = new JSpinner();
-		contentPane.add(spinnerMaxPrice);
+//		Second Spinner
+		SpinnerNumberModel priceSpinnerModelMaxPrice = new SpinnerNumberModel(startingMaxPrice, 0d, cielingPrice, 1.00d);
+		JSpinner spinnerMaxPrice = new JSpinner(priceSpinnerModelMaxPrice);
+//		spinnerMaxPrice.addPropertyChangeListener(new PropertyChangeListener() {
+//			public void propertyChange(PropertyChangeEvent evt) {
+//				setMaxPrice((double) spinnerMaxPrice.getValue());
+//				spinnerMaxPrice.setValue(getMaxPrice());
+//			}
+//		});
+		spinnerMaxPrice.addChangeListener(new ChangeListener() {	
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				setMaxPrice((double) spinnerMaxPrice.getValue());
+				spinnerMaxPrice.setValue(getMaxPrice());
+			}
+		});
+		JSpinner.NumberEditor editorMaxPrice = new JSpinner.NumberEditor(spinnerMaxPrice, "#,##0.00");
+		JFormattedTextField textFieldMaxPrice = editorMaxPrice.getTextField();
+		textFieldMaxPrice.setColumns(4);
+		spinnerMaxPrice.setEditor(editorMaxPrice);
+		add(spinnerMaxPrice);
 		
+//		"€" label
 		JLabel lblRightSide = new JLabel(" €");
-		contentPane.add(lblRightSide);
+		add(lblRightSide);
 	}
 }
