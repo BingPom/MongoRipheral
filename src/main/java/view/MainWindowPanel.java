@@ -6,7 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import enums.Windows;
+import enums.Window;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -24,21 +24,26 @@ public class MainWindowPanel extends JPanel {
 		setLayout(null);
 
 		JButton btnUpdate = new JButton("Actualizar");
-		btnUpdate.setBounds(218, 133, 79, 23);
+		btnUpdate.setBounds(227, 133, 79, 23);
 		
 		JButton btnDelete = new JButton("Borrar");
-		btnDelete.setBounds(317, 133, 79, 23);
+		btnDelete.setBounds(329, 133, 79, 23);
 		
 		JButton btnSearch = new JButton("Buscar");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				parent.goToCard(Windows.Search_Main_Window);
+				parent.goToCard(Window.Search_Main_Window);
 			}
 		});
-		btnSearch.setBounds(20, 133, 79, 23);
+		btnSearch.setBounds(23, 133, 79, 23);
 		
 		JButton btnAdd = new JButton("Añadir");
-		btnAdd.setBounds(119, 133, 79, 23);
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				parent.goToCard(Window.Add_Main_Window);
+			}
+		});
+		btnAdd.setBounds(124, 133, 79, 23);
 		
 		JLabel lblSelectOption = new JLabel("Seleccione una opción:");
 		lblSelectOption.setBounds(30, 101, 168, 14);

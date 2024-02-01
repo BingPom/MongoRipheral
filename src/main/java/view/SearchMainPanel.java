@@ -2,23 +2,22 @@ package view;
 
 import javax.swing.JPanel;
 
+import enums.Window;
 import view.components.PriceRangeSelector;
+import view.components.TypeSelector;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.DefaultComboBoxModel;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
 
 public class SearchMainPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField textFieldType;
 	private MainWindow parent;
+	private JTextField textFieldName;
+	private JTextField textFieldBrand;
 
 	/**
 	 * Create the panel.
@@ -28,52 +27,55 @@ public class SearchMainPanel extends JPanel {
 		setLayout(null);
 		
 		JButton btnSearch = new JButton("Buscar");
-		btnSearch.setBounds(316, 158, 89, 23);
+		btnSearch.setBounds(336, 206, 89, 23);
 		add(btnSearch);
 		
 		JLabel lblHeader = new JLabel("Introduzca sus preferencias de búsqueda: ");
-		lblHeader.setBounds(22, 25, 243, 14);
+		lblHeader.setBounds(22, 21, 243, 14);
 		add(lblHeader);
 		
 		PriceRangeSelector prs = new PriceRangeSelector(0d, 100d, 500d);
-		prs.setBounds(74, 50, 220, 30);
+		prs.setBounds(88, 147, 220, 30);
 		add(prs);
 		
 		JLabel lblPrice = new JLabel("Precio: ");
-		lblPrice.setBounds(32, 58, 46, 14);
+		lblPrice.setBounds(32, 155, 46, 14);
 		add(lblPrice);
 		
 		JLabel lblType = new JLabel("Tipo: ");
-		lblType.setBounds(32, 95, 46, 14);
+		lblType.setBounds(32, 85, 46, 14);
 		add(lblType);
-		
-		textFieldType = new JTextField();
-		textFieldType.setBounds(228, 92, 145, 20);
-		add(textFieldType);
-		textFieldType.setColumns(10);
-		
-		JComboBox<Object> comboBoxType = new JComboBox<Object>();
-		comboBoxType.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				if (comboBoxType.getSelectedItem().toString().equalsIgnoreCase("Otro")) {
-					textFieldType.setVisible(true);
-				} else {
-					textFieldType.setText("");
-					textFieldType.setVisible(false);
-				}
-			}
-		});
-		comboBoxType.setModel(new DefaultComboBoxModel<Object>(new String[] {"Test 1", "Test 2", "Otro"}));
-		comboBoxType.setBounds(73, 91, 145, 22);
-		add(comboBoxType);
 		
 		JButton btnBack = new JButton("Cancelar");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				parent.goToPreviousCard();
+				parent.goToCard(Window.Main_Window);
 			}
 		});
-		btnBack.setBounds(22, 158, 89, 23);
+		
+		btnBack.setBounds(10, 206, 89, 23);
 		add(btnBack);
+		
+		TypeSelector typeSelector = new TypeSelector();
+		typeSelector.setBounds(88, 81, 300, 23);
+		add(typeSelector);
+		
+		JLabel lblName = new JLabel("Nombre: ");
+		lblName.setBounds(32, 50, 46, 14);
+		add(lblName);
+		
+		textFieldName = new JTextField();
+		textFieldName.setBounds(88, 47, 148, 20);
+		add(textFieldName);
+		textFieldName.setColumns(10);
+		
+		JLabel lblBrand = new JLabel("Marca: ");
+		lblBrand.setBounds(32, 120, 46, 14);
+		add(lblBrand);
+		
+		textFieldBrand = new JTextField();
+		textFieldBrand.setBounds(88, 117, 148, 20);
+		add(textFieldBrand);
+		textFieldBrand.setColumns(10);
 	}
 }

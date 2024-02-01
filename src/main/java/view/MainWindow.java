@@ -1,15 +1,15 @@
 package view;
 
-import enums.Windows;
-
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+
+import enums.Window;
+import enums.Window_Dimension;
 
 public class MainWindow extends JFrame {
 
@@ -23,9 +23,8 @@ public class MainWindow extends JFrame {
 	public MainWindow() {
 		setIconImage(new ImageIcon("./src/main/res/Icon_16x16.png").getImage());
 		
-		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		setSize(435, 234);
-		setLocation(d.width / 2 - this.getSize().width / 2, d.height / 2 - this.getSize().height / 2);
+		setSize(Window_Dimension.Main_Window.size);
+		centerWindow();
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
@@ -35,17 +34,22 @@ public class MainWindow extends JFrame {
 
 		MainWindowPanel panel1 = new MainWindowPanel(this);
 		SearchMainPanel panel2 = new SearchMainPanel(this);
+		AddMainPanel panel3 = new AddMainPanel(this);
 
-		container.add(Windows.Main_Window.toString(), panel1);
-		container.add(Windows.Search_Main_Window.toString(), panel2);
+		container.add(Window.Main_Window.name.toString(), panel1);
+		container.add(Window.Search_Main_Window.name.toString(), panel2);
+		container.add(Window.Add_Main_Window.name.toString(), panel3);
 
 	}
 
-	public void goToCard(Windows window) {
-		card.show(container, window.toString());
+	public void goToCard(Window window) {
+		card.show(container, window.name.toString());
+		setSize(window.size);
+		centerWindow();
 	}
 	
-	public void goToPreviousCard() {
-		card.previous(container);
+	private void centerWindow() {
+		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+		setLocation(d.width / 2 - this.getSize().width / 2, d.height / 2 - this.getSize().height / 2);
 	}
 }
