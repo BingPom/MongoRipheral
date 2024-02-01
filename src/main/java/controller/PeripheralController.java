@@ -20,4 +20,6 @@ public interface PeripheralController {
 
 	Peripheral documentToPeripheral(Document document);
 
+	public void closeConnection();
+
 }
