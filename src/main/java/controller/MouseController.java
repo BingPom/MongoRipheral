@@ -2,10 +2,10 @@ package controller;
 
 import db.MongoDriver;
 
-public class KeyboardController extends AbstractPeripheralController {
+public class MouseController extends AbstractPeripheralController {
 	private static final String COLLECTION_NAME = "keyboards";
 
-	public KeyboardController() {
+	public MouseController() {
 		super();
 		this.collection = MongoDriver.getDatabase().getCollection(COLLECTION_NAME);
 	}
