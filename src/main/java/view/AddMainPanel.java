@@ -6,6 +6,7 @@ import enums.Window;
 
 import java.awt.Dimension;
 
+import view.components.AttributesEditor;
 import view.components.PriceSelector;
 import view.components.TypeSelector;
 
@@ -33,10 +34,6 @@ public class AddMainPanel extends JPanel {
 		lblHeadText.setBounds(10, 11, 351, 14);
 		add(lblHeadText);
 		
-		TypeSelector btnNewButton = new TypeSelector();
-		btnNewButton.setBounds(25, 109, 300, 23);
-		add(btnNewButton);
-		
 		JButton btnBack = new JButton("Cancelar");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -49,6 +46,11 @@ public class AddMainPanel extends JPanel {
 		JLabel lblNewLabel_1 = new JLabel("New label");
 		lblNewLabel_1.setBounds(25, 36, 46, 14);
 		add(lblNewLabel_1);
+		
+		AttributesEditor internalFrame = new AttributesEditor();
+		internalFrame.setBounds(-115, 58, 638, 401);
+		add(internalFrame);
+		internalFrame.setVisible(true);
 		
 		
 		
