@@ -1,6 +1,9 @@
 package app;
 
 
+import java.util.HashMap;
+import java.util.List;
+
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -10,7 +13,7 @@ import view.MainWindow;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) {/*
 		// Create a KeyboardController
 		KeyboardController keyboardController = new KeyboardController();
 
@@ -49,7 +52,7 @@ public class Main {
 		peripheralsAfterDelete.forEach(System.out::println);
 		// peripheralView.displayPeripherals(peripheralsAfterDelete);
 
-		keyboardController.closeConnection();
+		keyboardController.closeConnection();*/
 //		Start GUI
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");

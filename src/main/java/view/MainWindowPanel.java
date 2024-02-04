@@ -50,7 +50,7 @@ public class MainWindowPanel extends JPanel {
 		this.setLayout(null);
 		
 		JLabel lblWelcome = new JLabel("BIENVENIDO A MONGORIPHERAL");
-		lblWelcome.setBounds(30, 37, 359, 29);
+		lblWelcome.setBounds(30, 37, 378, 29);
 		lblWelcome.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		this.add(lblWelcome);
 		this.add(lblSelectOption);

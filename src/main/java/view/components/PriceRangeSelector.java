@@ -35,13 +35,13 @@ public class PriceRangeSelector extends JPanel {
 			this.minPrice = 0;
 			return;
 		}
-//		Check above cieling
-		if (minPrice > this.getCielingPrice()) {
-			this.minPrice = this.getCielingPrice();
-			return;
-		}
 //		Check above current max price
 		if (minPrice > this.getMaxPrice()) {
+			this.minPrice = this.getMaxPrice();
+			return;
+		}
+//		Check above cieling
+		if (minPrice > this.getCielingPrice()) {
 			this.minPrice = this.getMaxPrice();
 			return;
 		}
@@ -54,14 +54,14 @@ public class PriceRangeSelector extends JPanel {
 			this.maxPrice = 0;
 			return;
 		}
-//		Check above cieling
-		if (maxPrice > this.getCielingPrice()) {
-			this.maxPrice = this.getCielingPrice();
-			return;
-		}
 //		Check below current min price
 		if (maxPrice < this.getMinPrice()) {
 			this.maxPrice = this.getMinPrice();
+			return;
+		}
+//		Check above cieling
+		if (maxPrice > this.getCielingPrice()) {
+			this.maxPrice = this.getCielingPrice();
 			return;
 		}
 //		If all checks passed, assign new value
@@ -73,16 +73,16 @@ public class PriceRangeSelector extends JPanel {
 	 */
 	public PriceRangeSelector(double startingMinPrice, double startingMaxPrice, double cielingPrice) {
 //		Assign to attributes
+		this.setCielingPrice(cielingPrice);
 		this.setMinPrice(startingMinPrice);
 		this.setMaxPrice(startingMaxPrice);
-		this.setCielingPrice(cielingPrice);
 		
 //		"Desde" label
 		JLabel lblLeftSide = new JLabel("desde ");
 		add(lblLeftSide);
 
 //		First Spinner
-		SpinnerNumberModel priceSpinnerModelMinPrice = new SpinnerNumberModel(startingMinPrice, 0d, cielingPrice, 1.00d);
+		SpinnerNumberModel priceSpinnerModelMinPrice = new SpinnerNumberModel(startingMinPrice, 0d, null, 1.00d);
 		JSpinner spinnerMinPrice = new JSpinner(priceSpinnerModelMinPrice);
 		spinnerMinPrice.addChangeListener(new ChangeListener() {
 			@Override
@@ -104,12 +104,6 @@ public class PriceRangeSelector extends JPanel {
 //		Second Spinner
 		SpinnerNumberModel priceSpinnerModelMaxPrice = new SpinnerNumberModel(startingMaxPrice, 0d, cielingPrice, 1.00d);
 		JSpinner spinnerMaxPrice = new JSpinner(priceSpinnerModelMaxPrice);
-//		spinnerMaxPrice.addPropertyChangeListener(new PropertyChangeListener() {
-//			public void propertyChange(PropertyChangeEvent evt) {
-//				setMaxPrice((double) spinnerMaxPrice.getValue());
-//				spinnerMaxPrice.setValue(getMaxPrice());
-//			}
-//		});
 		spinnerMaxPrice.addChangeListener(new ChangeListener() {	
 			@Override
 			public void stateChanged(ChangeEvent e) {
