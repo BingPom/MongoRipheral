@@ -9,7 +9,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import enums.Window;
-import enums.Window_Dimension;
 
 public class MainWindow extends JFrame {
 
@@ -23,7 +22,7 @@ public class MainWindow extends JFrame {
 	public MainWindow() {
 		setIconImage(new ImageIcon("./src/main/res/Icon_16x16.png").getImage());
 		
-		setSize(Window_Dimension.Main_Window.size);
+		setSize(Window.Main_Window.size);
 		centerWindow();
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -32,13 +31,13 @@ public class MainWindow extends JFrame {
 		card = new CardLayout();
 		container.setLayout(card);
 
-		MainWindowPanel panel1 = new MainWindowPanel(this);
-		SearchMainPanel panel2 = new SearchMainPanel(this);
-		AddMainPanel panel3 = new AddMainPanel(this);
+		MainWindowPanel mainWindow = new MainWindowPanel(this);
+		SearchMainPanel searchMainWindow = new SearchMainPanel(this);
+		ElementEditorPanel addMainWindow = new ElementEditorPanel(this, "create");
 
-		container.add(Window.Main_Window.name.toString(), panel1);
-		container.add(Window.Search_Main_Window.name.toString(), panel2);
-		container.add(Window.Add_Main_Window.name.toString(), panel3);
+		container.add(Window.Main_Window.name.toString(), mainWindow);
+		container.add(Window.Search_Main_Window.name.toString(), searchMainWindow);
+		container.add(Window.Editor_Main_Window.name.toString(), addMainWindow);
 
 	}
 

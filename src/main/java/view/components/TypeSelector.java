@@ -6,10 +6,14 @@ import javax.swing.JTextField;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.event.CaretListener;
+
+import enums.PeripheralTypes;
+
 import javax.swing.event.CaretEvent;
 
 public class TypeSelector extends JPanel {
@@ -18,11 +22,14 @@ public class TypeSelector extends JPanel {
 	
 	private String type;
 	private String otherType;
+	private JComboBox<String> comboBoxType;
 	
 	public String getType() {
 		return type;
 	}
 	public void setType(String type) {
+		
+		comboBoxType.setSelectedItem(type);
 		this.type = type;
 	}
 	public String getOtherType() {
@@ -53,7 +60,7 @@ public class TypeSelector extends JPanel {
 		textFieldType.setBounds(155, 0, 145, 23);
 		textFieldType.setColumns(10);
 		
-		JComboBox<Object> comboBoxType = new JComboBox<Object>();
+		comboBoxType = new JComboBox<String>();
 		comboBoxType.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				setType(comboBoxType.getSelectedItem().toString());
@@ -66,10 +73,20 @@ public class TypeSelector extends JPanel {
 			}
 		});
 		setLayout(null);
-		comboBoxType.setModel(new DefaultComboBoxModel<Object>(new String[] {"Test 1", "Test 2", "Otro"}));
+		comboBoxType.setModel(new DefaultComboBoxModel<String>(getTypes()));
 		comboBoxType.setBounds(0, 0, 145, 23);
 		add(comboBoxType);
 		add(textFieldType);
+		
+	}
+	
+	private String[] getTypes() {
+		ArrayList<String> types = new ArrayList<String>();
+		for (PeripheralTypes type : PeripheralTypes.values()) {
+			types.add(type.toString());
+		}
+		types.add("Otro");
+		return types.toArray(String[]::new);
 	}
 
 }

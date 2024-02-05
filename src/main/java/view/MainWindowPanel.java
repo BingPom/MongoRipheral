@@ -40,7 +40,7 @@ public class MainWindowPanel extends JPanel {
 		JButton btnAdd = new JButton("Añadir");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				parent.goToCard(Window.Add_Main_Window);
+				parent.goToCard(Window.Editor_Main_Window);
 			}
 		});
 		btnAdd.setBounds(124, 133, 79, 23);
