@@ -16,7 +16,7 @@ public interface PeripheralController {
 
 	public void update(String name, Peripheral updatedPeripheral);
 
-	public void delete(String name);
+	public void delete(String name, String id);
 
 	Peripheral documentToPeripheral(Document document);
 
