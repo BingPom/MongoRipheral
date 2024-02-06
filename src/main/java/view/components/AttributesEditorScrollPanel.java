@@ -71,7 +71,9 @@ public class AttributesEditorScrollPanel extends JPanel {
 			}
 		});
 		add(buttons.get(index));
-		buttons.get(index).repaint();
+
+		this.revalidate();
+		this.repaint();
 	}
 
 	private void deleteItem(int index) {

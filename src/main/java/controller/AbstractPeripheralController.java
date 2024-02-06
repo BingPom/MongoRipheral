@@ -11,6 +11,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 
 import db.MongoDriver;
+import lombok.Setter;
 import model.Peripheral;
 
 public abstract class AbstractPeripheralController implements PeripheralController {
@@ -42,8 +43,10 @@ public abstract class AbstractPeripheralController implements PeripheralControll
 	}
 
 	@Override
-	public void delete(String name) {
-		collection.deleteOne(Filters.eq("name", name));
+	public void delete(String name, String id) {
+		Document filter = new Document("name", name).append("_id", id);
+
+		collection.deleteOne(Filters.and(filter));
 	}
 
 	@Override
