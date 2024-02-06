@@ -6,7 +6,9 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import enums.Window;
 
@@ -33,10 +35,12 @@ public class MainWindow extends JFrame {
 
 		MainWindowPanel mainWindow = new MainWindowPanel(this);
 		SearchMainPanel searchMainWindow = new SearchMainPanel(this);
+		ResultsTablePanel searchResultsWindow = new ResultsTablePanel(this, "search");
 		ElementEditorPanel addMainWindow = new ElementEditorPanel(this, "create");
 
 		container.add(Window.Main_Window.name.toString(), mainWindow);
 		container.add(Window.Search_Main_Window.name.toString(), searchMainWindow);
+		container.add(Window.Result_Table_Window.toString(), searchResultsWindow);
 		container.add(Window.Editor_Main_Window.name.toString(), addMainWindow);
 
 	}

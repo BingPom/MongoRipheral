@@ -5,7 +5,8 @@ import java.awt.Dimension;
 public enum Window {
 	Main_Window("Main_Window", new Dimension(435, 234)),
 	Search_Main_Window("Search_Main_Window", new Dimension(450, 281)),
-	Editor_Main_Window("Editor_Main_Window", new Dimension(540, 573))
+	Editor_Main_Window("Editor_Main_Window", new Dimension(540, 573)),
+	Result_Table_Window("Result_Table_Window", new Dimension(470,450))
 	;
 	
 //	JFrame bar takes 40px off the height (and maybe 10px of width)

@@ -27,6 +27,11 @@ public class SearchMainPanel extends JPanel {
 		setLayout(null);
 		
 		JButton btnSearch = new JButton("Buscar");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				parent.goToCard(Window.Result_Table_Window);
+			}
+		});
 		btnSearch.setBounds(336, 206, 89, 23);
 		add(btnSearch);
 		
