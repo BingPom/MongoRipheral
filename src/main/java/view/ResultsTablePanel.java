@@ -11,18 +11,12 @@ import javax.swing.table.TableRowSorter;
 import enums.Window;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import model.Peripheral;
-
-import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 
 import java.awt.event.ActionListener;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 
@@ -52,6 +46,7 @@ public class ResultsTablePanel extends JPanel {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setModel(
 				new DefaultTableModel(getPeripherals(), getPeripheralsFields()) {
+					private static final long serialVersionUID = 1L;
 					boolean[] columnEditables = new boolean[] { false, false };
 
 					public boolean isCellEditable(int row, int column) {
@@ -76,7 +71,7 @@ public class ResultsTablePanel extends JPanel {
 		add(btnCancel);
 
 //		If in search mode, it has no action (button) to do
-//		if (!this.getMode().equalsIgnoreCase("search")) {
+		if (!this.getMode().equalsIgnoreCase("search")) {
 			JButton btnAction = new JButton("Action");
 			btnAction.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -86,7 +81,7 @@ public class ResultsTablePanel extends JPanel {
 			});
 			btnAction.setBounds(362, 376, 89, 23);
 			add(btnAction);
-//		}
+		}
 	}
 	
 	private String[] getPeripheralsFields() {

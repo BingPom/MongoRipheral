@@ -4,11 +4,9 @@ import javax.swing.JPanel;
 
 import java.awt.Dimension;
 
-import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.awt.event.ActionEvent;
 
 public class AttributesEditorScrollPanel extends JPanel {
@@ -116,5 +114,17 @@ public class AttributesEditorScrollPanel extends JPanel {
 			return 279;
 		}
 		return size;
+	}
+	
+	public void setEditable(boolean enabled) {
+		for (AttributesEditorItem item : items) {
+			item.setEditable(enabled);
+		}
+		for (JButton button : buttons) {
+			button.setEnabled(enabled);
+			button.setVisible(enabled);
+		}
+		btnAdd.setEnabled(enabled);
+		btnAdd.setVisible(enabled);
 	}
 }

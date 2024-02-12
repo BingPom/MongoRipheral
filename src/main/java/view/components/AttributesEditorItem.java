@@ -16,6 +16,8 @@ public class AttributesEditorItem extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private String attributeName = new String();
 	private String attributeValue = new String();
+	private JTextField textFieldAttributeName;
+	private JTextField textFieldAttributeValue;
 	
 	public String getAttributeName() {
 		return attributeName;
@@ -37,7 +39,7 @@ public class AttributesEditorItem extends JPanel {
 
 		setSize(new Dimension(307, 23));
 		
-		JTextField textFieldAttributeName = new JTextField();
+		textFieldAttributeName = new JTextField();
 		textFieldAttributeName.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent e) {
 				setAttributeName(textFieldAttributeName.getText());
@@ -55,7 +57,7 @@ public class AttributesEditorItem extends JPanel {
 		add(lblLine);
 
 
-		JTextField textFieldAttributeValue = new JTextField();
+		textFieldAttributeValue = new JTextField();
 		textFieldAttributeValue.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent e) {
 				setAttributeValue(textFieldAttributeValue.getText());
@@ -66,6 +68,11 @@ public class AttributesEditorItem extends JPanel {
 		setLayout(null);
 		add(textFieldAttributeValue);
 
+	}
+	
+	public void setEditable(boolean enabled) {
+		textFieldAttributeName.setEditable(enabled);
+		textFieldAttributeValue.setEditable(enabled);
 	}
 
 }

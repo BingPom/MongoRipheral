@@ -21,8 +21,9 @@ public class TypeSelector extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private String type;
-	private String otherType;
+	private String otherType = new String();
 	private JComboBox<String> comboBoxType;
+	private JTextField textFieldType;
 	
 	public String getType() {
 		return type;
@@ -36,6 +37,7 @@ public class TypeSelector extends JPanel {
 		return otherType;
 	}
 	public void setOtherType(String otherType) {
+		this.setType("Otro");
 		this.otherType = otherType;
 	}
 	public String getSelectedType() {
@@ -51,7 +53,7 @@ public class TypeSelector extends JPanel {
 	public TypeSelector() {
 		setSize(new Dimension(300, 23));
 		
-		JTextField textFieldType = new JTextField();
+		textFieldType = new JTextField();
 		textFieldType.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent e) {
 				setOtherType(textFieldType.getText());
@@ -74,10 +76,10 @@ public class TypeSelector extends JPanel {
 		});
 		setLayout(null);
 		comboBoxType.setModel(new DefaultComboBoxModel<String>(getTypes()));
+		comboBoxType.setSelectedIndex(comboBoxType.getItemCount() - 1);
 		comboBoxType.setBounds(0, 0, 145, 23);
 		add(comboBoxType);
 		add(textFieldType);
-		
 	}
 	
 	private String[] getTypes() {
@@ -86,7 +88,13 @@ public class TypeSelector extends JPanel {
 			types.add(type.toString());
 		}
 		types.add("Otro");
+		types.add("Todos");
 		return types.toArray(String[]::new);
+	}
+	
+	public void setEditable(boolean editable) {
+		comboBoxType.setEnabled(editable);
+		textFieldType.setEditable(editable);
 	}
 
 }

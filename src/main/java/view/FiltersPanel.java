@@ -8,32 +8,28 @@ import view.components.TypeSelector;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
-public class SearchMainPanel extends JPanel {
+import controller.PeripheralController;
+
+public class FiltersPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private MainWindow parent;
 	private JTextField textFieldName;
 	private JTextField textFieldBrand;
+	private PeripheralController controller = new PeripheralController();
 
 	/**
 	 * Create the panel.
 	 */
-	public SearchMainPanel(MainWindow frame) {
+	public FiltersPanel(MainWindow frame, Window previousPage, Window nextPage) {
 		parent = frame;
 		setLayout(null);
-		
-		JButton btnSearch = new JButton("Buscar");
-		btnSearch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				parent.goToCard(Window.Result_Table_Window);
-			}
-		});
-		btnSearch.setBounds(336, 206, 89, 23);
-		add(btnSearch);
 		
 		JLabel lblHeader = new JLabel("Introduzca sus preferencias de búsqueda: ");
 		lblHeader.setBounds(22, 21, 243, 14);
@@ -54,7 +50,7 @@ public class SearchMainPanel extends JPanel {
 		JButton btnBack = new JButton("Cancelar");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				parent.goToCard(Window.Main_Window);
+				parent.goToCard(previousPage);
 			}
 		});
 		
@@ -64,6 +60,19 @@ public class SearchMainPanel extends JPanel {
 		TypeSelector typeSelector = new TypeSelector();
 		typeSelector.setBounds(88, 81, 300, 23);
 		add(typeSelector);
+		
+		JButton btnSearch = new JButton("Buscar");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (typeSelector.getSelectedType().isBlank()) {
+					JOptionPane.showMessageDialog(parent, "El tipo no puede estar vacío, escríbalo o seleccione otra opción.");
+				} else {					
+					parent.goToCard(nextPage);
+				}
+			}
+		});
+		btnSearch.setBounds(336, 206, 89, 23);
+		add(btnSearch);
 		
 		JLabel lblName = new JLabel("Nombre: ");
 		lblName.setBounds(32, 50, 46, 14);

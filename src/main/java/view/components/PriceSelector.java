@@ -12,6 +12,7 @@ public class PriceSelector extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private double price;
+	private JSpinner spinnerPrice;
 	
 	public double getPrice() {
 		return price;
@@ -33,7 +34,7 @@ public class PriceSelector extends JPanel {
 	 */
 	public PriceSelector(double startingPrice) {
 		SpinnerNumberModel priceSpinnerModelPrice = new SpinnerNumberModel(startingPrice, 0d, null, 1.00d);
-		JSpinner spinnerPrice = new JSpinner(priceSpinnerModelPrice);
+		spinnerPrice = new JSpinner(priceSpinnerModelPrice);
 		spinnerPrice.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -48,4 +49,8 @@ public class PriceSelector extends JPanel {
 		add(spinnerPrice);
 	}
 
+	public void setEditable(boolean enabled) {
+		spinnerPrice.setEnabled(enabled);
+	}
+	
 }

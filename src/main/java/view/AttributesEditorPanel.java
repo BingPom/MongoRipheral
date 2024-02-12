@@ -12,6 +12,7 @@ import view.components.PriceSelector;
 import view.components.TypeSelector;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -22,16 +23,35 @@ import javax.swing.event.CaretEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
-public class ElementEditorPanel extends JPanel {
+public class AttributesEditorPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
 	public Dimension size = new Dimension(530, 370);
 	private JTextField textFieldName;
 	private JTextField textFieldBrand;
-	private TypeSelector typeSelector; 
+	private TypeSelector typeSelector;
 	private PriceSelector priceSelector;
+	private AttributesEditor attEditor;
 	private Peripheral peripheral = new Peripheral();
+	private String mode;
+	private MainWindow parentFrame;
+
+	public MainWindow getParentFrame() {
+		return parentFrame;
+	}
+
+	public void setParentFrame(MainWindow parentFrame) {
+		this.parentFrame = parentFrame;
+	}
+
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
 
 	public Peripheral getPeripheral() {
 		return peripheral;
@@ -48,7 +68,9 @@ public class ElementEditorPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ElementEditorPanel(MainWindow parent, String mode) {
+	public AttributesEditorPanel(MainWindow parent, String mode) {
+		this.setMode(mode);
+		
 		setLayout(null);
 
 		JLabel lblHeadText = new JLabel("Introduzca los datos del producto a añadir: ");
@@ -64,37 +86,17 @@ public class ElementEditorPanel extends JPanel {
 		btnBack.setBounds(10, 498, 89, 23);
 		add(btnBack);
 
-		AttributesEditor attEditor = new AttributesEditor();
+		attEditor = new AttributesEditor();
 		attEditor.setForeground(new Color(0, 0, 0));
 		attEditor.setBorder(null);
 		attEditor.setLocation(46, 190);
 		add(attEditor);
 
 		JButton btnCrear = new JButton();
-		switch (mode) {
-		case "create":
-			btnCrear.setText("Añadir");
-			break;
-		case "edit":
-			btnCrear.setText("Guardar");
-			break;
-		default:
-			btnCrear.setText("Error");
-			break;
-		}
+		setButtonText(btnCrear);
 		btnCrear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				switch (mode) {
-				case "create":
-					//TODO 
-					break;
-				case "edit":
-					//TODO
-					break;
-				default:
-					//Do nothing
-					break;
-				}
+				doAction();
 			}
 		});
 		btnCrear.setBounds(424, 498, 89, 23);
@@ -128,7 +130,7 @@ public class ElementEditorPanel extends JPanel {
 		});
 		typeSelector.setBounds(102, 84, 300, 23);
 		add(typeSelector);
-
+		
 		JLabel lblBrand = new JLabel("Marca: ");
 		lblBrand.setBounds(46, 122, 46, 14);
 		add(lblBrand);
@@ -153,5 +155,46 @@ public class ElementEditorPanel extends JPanel {
 		add(lblPrice);
 		attEditor.setVisible(true);
 
+		checkEditable();
+	}
+
+	private void setButtonText(JButton btnCrear) {
+		switch (this.getMode()) {
+		case "create":
+			btnCrear.setText("Añadir");
+			break;
+		case "edit":
+			btnCrear.setText("Guardar");
+			break;
+		default:
+			btnCrear.setText("Error");
+			break;
+		}
+	}
+
+	private void doAction() {
+		switch (this.getMode()) {
+		case "edit":
+
+			break;
+
+		case "delete":
+
+			break;
+		default:
+			break;
+		}
+
+		JOptionPane.showMessageDialog(getParentFrame(), "adsa");
+	}
+	
+	private void checkEditable() {
+		if (this.getMode().equalsIgnoreCase("view")) {
+			textFieldName.setEditable(false);
+			textFieldBrand.setEditable(false);
+			typeSelector.setEditable(false);
+			priceSelector.setEditable(false);
+			attEditor.setEditable(false);
+		}
 	}
 }

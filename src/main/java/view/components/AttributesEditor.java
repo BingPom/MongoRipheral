@@ -1,36 +1,19 @@
 package view.components;
 
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JInternalFrame;
 
 import java.awt.Dimension;
-import java.awt.LayoutManager;
 
-import javax.swing.JTable;
 import javax.swing.JLabel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.ScrollPaneConstants;
-import java.awt.Rectangle;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.SwingConstants;
 import java.awt.Component;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.BorderLayout;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.MatteBorder;
-import java.awt.Color;
 
 public class AttributesEditor extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private AttributesEditorScrollPanel aetsp;
+	private AttributesEditorScrollPanel attributesScrollPanel;
 
 	/**
 	 * Create the panel.
@@ -38,7 +21,8 @@ public class AttributesEditor extends JPanel {
 	public AttributesEditor() {
 		setSize(400, 279);
 		
-		aetsp = new AttributesEditorScrollPanel() {
+		attributesScrollPanel = new AttributesEditorScrollPanel() {
+			private static final long serialVersionUID = 1L;
 			private Dimension size;
 			
 			@Override
@@ -48,17 +32,16 @@ public class AttributesEditor extends JPanel {
 			
 			@Override
 			public Dimension getPreferredSize() {
-				// TODO Auto-generated method stub
-				setPreferredSize(new Dimension(377, aetsp.getComponentSize()));
+				setPreferredSize(new Dimension(377, attributesScrollPanel.getComponentSize()));
 				revalidate();
 				return this.size;
 			}
 		};
-		aetsp.setPreferredSize(new Dimension(377, 279));
-		aetsp.revalidate();
+		attributesScrollPanel.setPreferredSize(new Dimension(377, 279));
+		attributesScrollPanel.revalidate();
 		setLayout(new BorderLayout(0, 0));
 		
-		JScrollPane scrollPane = new JScrollPane(aetsp);
+		JScrollPane scrollPane = new JScrollPane(attributesScrollPanel);
 		add(scrollPane);
 		
 		
@@ -79,5 +62,9 @@ public class AttributesEditor extends JPanel {
 		panel.add(lblProperties, BorderLayout.WEST);
 		panel.add(lblNewLabel, BorderLayout.CENTER);
 		panel.add(lblValue, BorderLayout.EAST);
+	}
+	
+	public void setEditable(boolean enabled) {
+		attributesScrollPanel.setEditable(enabled);
 	}
 }
