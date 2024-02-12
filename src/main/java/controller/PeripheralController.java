@@ -2,24 +2,38 @@ package controller;
 
 import java.util.List;
 
-import org.bson.Document;
-
+import db.MongoDriver;
 import model.Peripheral;
 
-public interface PeripheralController {
+public class PeripheralController extends AbstractPeripheralController {
 
-	public void insert(Peripheral peripheral);
+	public PeripheralController() {
+	}
 
-	public List<Peripheral> findAll();
+	public void create(Peripheral peripheral) {
+		getPeripheralCollection(peripheral);
 
-	public Peripheral findByName(String name);
+		super.insert(peripheral);
+	}
 
-	public void update(String name, Peripheral updatedPeripheral);
+	public List<Peripheral> findByName(String nombre) {
+		return super.findByName(nombre);
+	}
 
-	public void delete(String name, String id);
+	public void update(String id, Peripheral peripheral) {
+		getPeripheralCollection(peripheral);
 
-	Peripheral documentToPeripheral(Document document);
+		super.update(id, peripheral);
 
-	public void closeConnection();
+	}
 
+	public void delete(Peripheral peripheral, String id) {
+		getPeripheralCollection(peripheral);
+
+		super.delete(peripheral.getName(), id);
+	}
+
+	private void getPeripheralCollection(Peripheral peripheral) {
+		collection = MongoDriver.getDatabase().getCollection(peripheral.getType());
+	}
 }

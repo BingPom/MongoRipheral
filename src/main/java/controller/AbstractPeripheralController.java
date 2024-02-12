@@ -4,17 +4,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.bson.Document;
 
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoIterable;
 import com.mongodb.client.model.Filters;
 
 import db.MongoDriver;
 import lombok.Setter;
 import model.Peripheral;
 
-public abstract class AbstractPeripheralController implements PeripheralController {
+public abstract class AbstractPeripheralController implements IPeripheralController {
 	protected MongoCollection<Document> collection;
 
 	public AbstractPeripheralController() {
@@ -35,11 +38,18 @@ public abstract class AbstractPeripheralController implements PeripheralControll
 	}
 
 	@Override
-	public Peripheral findByName(String name) {
-		Document doc = collection.find(Filters.eq("name", name)).first();
-		Set<String> keys = doc.keySet();
-		return doc != null ? documentToPeripheral(doc) : null;
+	public List<Peripheral> findByName(String name) {
+		List<Peripheral> peripherals = new ArrayList<>();
+		MongoIterable<String> collectionNames = MongoDriver.getDatabase().listCollectionNames();
 
+		for (String collectionName : collectionNames) {
+			collection = MongoDriver.getDatabase().getCollection(collectionName);
+
+			collection.find(Filters.regex(name, Pattern.compile(name, Pattern.CASE_INSENSITIVE)))
+					.forEach(document -> peripherals.add(documentToPeripheral(document)));
+		}
+
+		return peripherals;
 	}
 
 	@Override
@@ -52,7 +62,12 @@ public abstract class AbstractPeripheralController implements PeripheralControll
 	@Override
 	public List<Peripheral> findAll() {
 		List<Peripheral> peripherals = new ArrayList<>();
-		collection.find().forEach(document -> peripherals.add(documentToPeripheral(document)));
+		MongoIterable<String> collectionNames = MongoDriver.getDatabase().listCollectionNames();
+
+		for (String collectionName : collectionNames) {
+			collection = MongoDriver.getDatabase().getCollection(collectionName);
+			collection.find().forEach(document -> peripherals.add(documentToPeripheral(document)));
+		}
 
 		return peripherals;
 	}
