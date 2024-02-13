@@ -34,22 +34,30 @@ public class MainWindow extends JFrame {
 		MainWindowPanel mainWindow = new MainWindowPanel(this);
 		
 		FiltersPanel searchMainWindow = new FiltersPanel(this, Window.Main_Window, Window.Search_Result_Table);
-		ResultsTablePanel searchResultsTable = new ResultsTablePanel(this, "search");
-		AttributesEditorPanel searchAttributesViewer = new AttributesEditorPanel(this, "view");
+		ResultsTablePanel searchResultsTable = new ResultsTablePanel(this, "search", Window.Search_Main_Window, Window.Search_Attributes_Viewer);
+		AttributesEditorPanel searchAttributesViewer = new AttributesEditorPanel(this, "view", Window.Search_Result_Table, Window.Search_Result_Table);
 		
-		AttributesEditorPanel addMainPage = new AttributesEditorPanel(this, "create");
+		AttributesEditorPanel addMainPage = new AttributesEditorPanel(this, "create", Window.Main_Window, Window.Main_Window);
 		
-		ResultsTablePanel updateMainPage = new ResultsTablePanel(this, "update");
-		AttributesEditorPanel updateAttributesEditor = new AttributesEditorPanel(this, "update");
+		ResultsTablePanel updateMainPage = new ResultsTablePanel(this, "update", Window.Main_Window, Window.Update_Attributes_Editor);
+		AttributesEditorPanel updateAttributesEditor = new AttributesEditorPanel(this, "update", Window.Update_Main_Window, Window.Update_Main_Window);
 		
-		ResultsTablePanel deleteMainPage = new ResultsTablePanel(this, "delete");
-		AttributesEditorPanel deleteAttributesEditor = new AttributesEditorPanel(this, "delete");
+		ResultsTablePanel deleteMainPage = new ResultsTablePanel(this, "delete", Window.Main_Window, Window.Delete_Attributes_Editor);
+		AttributesEditorPanel deleteAttributesEditor = new AttributesEditorPanel(this, "delete", Window.Delete_Main_Window, Window.Main_Window);
 
 		container.add(Window.Main_Window.name.toString(), mainWindow);
+		
 		container.add(Window.Search_Main_Window.name.toString(), searchMainWindow);
-		container.add(Window.Result_Table_Window.toString(), searchResultsWindow);
-		container.add(Window.Add_Main_Window.name.toString(), addMainWindow);
-
+		container.add(Window.Search_Result_Table.name.toString(), searchResultsTable);
+		container.add(Window.Search_Attributes_Viewer.name.toString(), searchAttributesViewer);
+		
+		container.add(Window.Add_Main_Window.name.toString(), addMainPage);
+		
+		container.add(Window.Update_Main_Window.name.toString(), updateMainPage);
+		container.add(Window.Update_Attributes_Editor.name.toString(), updateAttributesEditor);
+		
+		container.add(Window.Delete_Main_Window.name.toString(), deleteMainPage);
+		container.add(Window.Delete_Attributes_Editor.name.toString(), deleteAttributesEditor);
 	}
 
 	public void goToCard(Window window) {

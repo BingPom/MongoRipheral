@@ -24,10 +24,20 @@ public class MainWindowPanel extends JPanel {
 		setLayout(null);
 
 		JButton btnUpdate = new JButton("Actualizar");
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				parent.goToCard(Window.Update_Main_Window);
+			}
+		});
 		btnUpdate.setBounds(227, 133, 79, 23);
 		
 		JButton btnDelete = new JButton("Borrar");
 		btnDelete.setBounds(329, 133, 79, 23);
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				parent.goToCard(Window.Delete_Main_Window);
+			}
+		});
 		
 		JButton btnSearch = new JButton("Buscar");
 		btnSearch.addActionListener(new ActionListener() {

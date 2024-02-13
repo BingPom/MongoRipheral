@@ -23,4 +23,14 @@ public class Peripheral {
 		return name + "\t➡\n\tMarca: " + brand + "\n\tPrecio: " + price.toString() + "\n\tDescripcion: " + description
 				+ "\n";
 	}
+	
+	public Object[] toObjectArray() {
+		Object[] result = new Object[5];
+		result[0] = this.getName();
+		result[1] = this.getType();
+		result[2] = this.getBrand();
+		result[3] = this.getPrice();
+		result[4] = this.getDescription();
+		return result;
+	}
 }

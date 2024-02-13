@@ -68,7 +68,8 @@ public class AttributesEditorPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public AttributesEditorPanel(MainWindow parent, String mode) {
+	public AttributesEditorPanel(MainWindow parent, String mode, Window previousWindow, Window nextWindow) {
+		setParentFrame(parent);
 		this.setMode(mode);
 		
 		setLayout(null);
@@ -80,7 +81,7 @@ public class AttributesEditorPanel extends JPanel {
 		JButton btnBack = new JButton("Cancelar");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				parent.goToCard(Window.Main_Window);
+				parent.goToCard(previousWindow);
 			}
 		});
 		btnBack.setBounds(10, 498, 89, 23);
@@ -96,7 +97,7 @@ public class AttributesEditorPanel extends JPanel {
 		setButtonText(btnCrear);
 		btnCrear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				doAction();
+				doAction(nextWindow);
 			}
 		});
 		btnCrear.setBounds(424, 498, 89, 23);
@@ -172,7 +173,7 @@ public class AttributesEditorPanel extends JPanel {
 		}
 	}
 
-	private void doAction() {
+	private void doAction(Window nextWindow) {
 		switch (this.getMode()) {
 		case "edit":
 
@@ -181,15 +182,20 @@ public class AttributesEditorPanel extends JPanel {
 		case "delete":
 
 			break;
+			
+		case "view":
+			
+			break;
 		default:
 			break;
 		}
 
 		JOptionPane.showMessageDialog(getParentFrame(), "adsa");
+		this.getParentFrame().goToCard(nextWindow);
 	}
 	
 	private void checkEditable() {
-		if (this.getMode().equalsIgnoreCase("view")) {
+		if (this.getMode().equalsIgnoreCase("view") || this.getMode().equalsIgnoreCase("delete")) {
 			textFieldName.setEditable(false);
 			textFieldBrand.setEditable(false);
 			typeSelector.setEditable(false);
