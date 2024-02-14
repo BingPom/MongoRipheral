@@ -29,15 +29,13 @@ public class TypeSelector extends JPanel {
 		return type;
 	}
 	public void setType(String type) {
-		
-		comboBoxType.setSelectedItem(type);
 		this.type = type;
 	}
 	public String getOtherType() {
+		this.setType("Otro");
 		return otherType;
 	}
 	public void setOtherType(String otherType) {
-		this.setType("Otro");
 		this.otherType = otherType;
 	}
 	public String getSelectedType() {
@@ -46,7 +44,23 @@ public class TypeSelector extends JPanel {
 		}
 		return this.getType();
 	}
-
+	public void updateType(String type) {
+		for (int i = 0; i < comboBoxType.getItemCount(); i++) {
+			if (comboBoxType.getItemAt(i).equalsIgnoreCase(type)) {
+				comboBoxType.setSelectedItem(type);
+				this.type = type;
+				textFieldType.setText("");
+				textFieldType.setVisible(false);
+				return;
+			}
+		}
+		comboBoxType.setSelectedItem("Otro");
+		this.type = "Otro";
+		this.otherType = type;
+		textFieldType.setText(type);
+		textFieldType.setVisible(true);
+	}
+	
 	/**
 	 * Create the panel.
 	 */
@@ -54,6 +68,7 @@ public class TypeSelector extends JPanel {
 		setSize(new Dimension(300, 23));
 		
 		textFieldType = new JTextField();
+		textFieldType.setText(this.getOtherType());
 		textFieldType.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent e) {
 				setOtherType(textFieldType.getText());

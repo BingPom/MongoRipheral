@@ -36,6 +36,7 @@ public class AttributesEditorPanel extends JPanel {
 	private Peripheral peripheral = new Peripheral();
 	private String mode;
 	private MainWindow parentFrame;
+	private JTextField textFieldDescription;
 
 	public MainWindow getParentFrame() {
 		return parentFrame;
@@ -60,9 +61,10 @@ public class AttributesEditorPanel extends JPanel {
 	public void setPeripheral(Peripheral peripheral) {
 		this.peripheral = peripheral;
 		textFieldName.setText(this.getPeripheral().getName());
-		typeSelector.setType(this.getPeripheral().getType());
-		textFieldBrand.setText(this.getPeripheral().getName());
-		priceSelector.setPrice(this.getPeripheral().getPrice());
+		typeSelector.updateType(this.getPeripheral().getType());
+		textFieldBrand.setText(this.getPeripheral().getBrand());
+		priceSelector.updatePrice(this.getPeripheral().getPrice());
+		textFieldDescription.setText(this.getPeripheral().getDescription());
 	}
 
 	/**
@@ -88,9 +90,10 @@ public class AttributesEditorPanel extends JPanel {
 		add(btnBack);
 
 		attEditor = new AttributesEditor();
+		attEditor.setSize(400, 265);
 		attEditor.setForeground(new Color(0, 0, 0));
 		attEditor.setBorder(null);
-		attEditor.setLocation(46, 190);
+		attEditor.setLocation(46, 222);
 		add(attEditor);
 
 		JButton btnCrear = new JButton();
@@ -112,7 +115,6 @@ public class AttributesEditorPanel extends JPanel {
 		textFieldName.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent e) {
 				getPeripheral().setName(textFieldName.getText());
-//				textFieldName.setText(getPeripheral().getName());
 			}
 		});
 		textFieldName.setColumns(10);
@@ -140,7 +142,7 @@ public class AttributesEditorPanel extends JPanel {
 		textFieldBrand.setText(this.getPeripheral().getName());
 		textFieldBrand.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent e) {
-				textFieldName.setText(getPeripheral().getName());
+				getPeripheral().setBrand(textFieldBrand.getText());
 			}
 		});
 		textFieldBrand.setColumns(10);
@@ -154,6 +156,22 @@ public class AttributesEditorPanel extends JPanel {
 		JLabel lblPrice = new JLabel("Precio: ");
 		lblPrice.setBounds(46, 156, 46, 14);
 		add(lblPrice);
+		
+		JLabel lblDescription = new JLabel("Descripción: ");
+		lblDescription.setBounds(46, 192, 80, 14);
+		add(lblDescription);
+		
+		textFieldDescription = new JTextField();
+		textFieldDescription.setText(this.getPeripheral().getDescription());
+		textFieldDescription.addCaretListener(new CaretListener() {
+			public void caretUpdate(CaretEvent e) {
+				getPeripheral().setDescription(textFieldDescription.getText());
+			}
+		});
+		textFieldDescription.setColumns(40);
+		textFieldDescription.setBounds(112, 189, 334, 20);
+		add(textFieldDescription);
+		
 		attEditor.setVisible(true);
 
 		checkEditable();
@@ -198,6 +216,7 @@ public class AttributesEditorPanel extends JPanel {
 		if (this.getMode().equalsIgnoreCase("view") || this.getMode().equalsIgnoreCase("delete")) {
 			textFieldName.setEditable(false);
 			textFieldBrand.setEditable(false);
+			textFieldDescription.setEditable(false);
 			typeSelector.setEditable(false);
 			priceSelector.setEditable(false);
 			attEditor.setEditable(false);

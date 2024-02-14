@@ -26,7 +26,10 @@ public class PriceSelector extends JPanel {
 //		If all checks passed, assign new value
 		this.price = price;
 	}
-
+	public void updatePrice(double price) {
+		this.setPrice(price);
+		spinnerPrice.setValue(this.getPrice());
+	}
 
 
 	/**

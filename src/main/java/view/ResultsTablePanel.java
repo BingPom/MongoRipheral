@@ -9,7 +9,6 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import controller.PeripheralController;
 import enums.Window;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,20 +20,38 @@ import javax.swing.RowFilter;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class ResultsTablePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTable table;
 	private String mode;
+	private ArrayList<Peripheral> peripherals = new ArrayList<Peripheral>();
+	private DefaultTableModel tableModel = new DefaultTableModel(getPeripheralsData(), getPeripheralsFields()) {
+		private static final long serialVersionUID = 1L;
+		boolean[] columnEditables = new boolean[] { false, false, false, false, false };
+		
+		public boolean isCellEditable(int row, int column) {
+			return columnEditables[column];
+		}
+	};
+	private JTable table;
 	private MainWindow parentFrame;
 
+	public void updateTable(ArrayList<Peripheral> peripherals) {
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model.fireTableDataChanged();
+		setPeripherals(peripherals);
+		tableModel.fireTableDataChanged();
+		revalidate();
+		repaint();
+	}
+	
 	/**
 	 * Create the panel.
 	 */
@@ -47,17 +64,11 @@ public class ResultsTablePanel extends JPanel {
 		scrollPane.setBounds(10, 36, 441, 329);
 		add(scrollPane);
 
-		table = new JTable();
+		table = new JTable(tableModel);
 		scrollPane.setViewportView(table);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setModel(new DefaultTableModel(getPeripherals(), getPeripheralsFields()) {
-			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false, false, false, false, false };
-
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+		table.setModel(tableModel);
+		
 		TableColumnModel tcm = table.getColumnModel();
 		tcm.getColumn(0).setPreferredWidth(150);
 		tcm.getColumn(1).setPreferredWidth(150);
@@ -92,19 +103,12 @@ public class ResultsTablePanel extends JPanel {
 	}
 
 	private String[] getPeripheralsFields() {
-		// TODO Auto-generated method stub
 		String[] result = { "Nombre", "Tipo", "Marca", "Precio", "Descripcion" };
 		return result;
 	}
 
-	private Object[][] getPeripherals() {
-		new Peripheral();
-		ArrayList<Peripheral> peripherals = new ArrayList<Peripheral>();
-		peripherals.add(Peripheral.builder().name("Teclado1").type("Teclado").brand("Marca1").price(100d).description("Es un teclado 1").build());
-		peripherals.add(Peripheral.builder().name("Cascos1").type("Casco").brand("Marca2").price(200d).description("Es un casco 1").build());
-		
-		Object[][] result = { { "1", "2" }, { "3", "4" } };
-		return toObjectMatrix(peripherals);
+	private Object[][] getPeripheralsData() {
+		return toObjectMatrix(this.getPeripherals());
 	}
 	
 	private Object[][] toObjectMatrix(ArrayList<Peripheral> peripherals) {
@@ -120,19 +124,21 @@ public class ResultsTablePanel extends JPanel {
 		case "edit":
 
 			break;
-
 		case "delete":
-
+			JOptionPane.showMessageDialog(getParentFrame(), "adsa");
+			this.getParentFrame().goToCard(nextWindow);
 			break;
-
 		case "search":
-
+			if (table.getSelectedRow() >= 0) {
+				AttributesEditorPanel a = (AttributesEditorPanel) this.getParentFrame().getClassByWindow(nextWindow);
+				a.setPeripheral(getPeripherals().get(table.getSelectedRow()));
+				this.getParentFrame().goToCard(nextWindow);			
+			} else {
+				JOptionPane.showMessageDialog(parentFrame, "Ningún periférico seleccionado, seleccione uno antes de continuar");
+			}
 			break;
 		default:
 			break;
 		}
-
-		JOptionPane.showMessageDialog(getParentFrame(), "adsa");
-		this.getParentFrame().goToCard(nextWindow);
 	}
 }
