@@ -17,8 +17,6 @@ public enum Window {
 	Delete_Main_Window("Delete_Main_Window", WindowDimension.Table_Page),
 	Delete_Attributes_Editor("Delete_Attributes_Editor", WindowDimension.Attributes_Page)
 	;
-	
-//	JFrame bar takes 40px off the height (and maybe 10px of width)
 
 	public final String name;
     public final Dimension size;

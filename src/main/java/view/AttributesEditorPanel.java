@@ -37,6 +37,15 @@ public class AttributesEditorPanel extends JPanel {
 	private String mode;
 	private MainWindow parentFrame;
 	private JTextField textFieldDescription;
+	private String peripheralId;
+
+	public String getPeripheralId() {
+		return peripheralId;
+	}
+
+	public void setPeripheralId(String peripheralId) {
+		this.peripheralId = peripheralId;
+	}
 
 	public MainWindow getParentFrame() {
 		return parentFrame;
@@ -67,12 +76,12 @@ public class AttributesEditorPanel extends JPanel {
 		textFieldDescription.setText(peripheral.getDescription() == null ? "" : this.getPeripheral().getDescription());
 		if (peripheral.getAttributes() != null) {
 			attEditor.updateData(peripheral.getAttributes());
-			if (mode.equalsIgnoreCase("view")) {
+			if (mode.equalsIgnoreCase("view") || mode.equalsIgnoreCase("delete")) {
 				attEditor.setEditable(false);
 			}
 		} else {
 			attEditor.dropData();
-			if (mode.equalsIgnoreCase("view")) {
+			if (mode.equalsIgnoreCase("view") || mode.equalsIgnoreCase("delete")) {
 				attEditor.setEditable(false);
 			}
 		}
@@ -195,7 +204,7 @@ public class AttributesEditorPanel extends JPanel {
 		case "create":
 			btnAction.setText("Añadir");
 			break;
-		case "edit":
+		case "update":
 			btnAction.setText("Guardar");
 			break;
 		default:
@@ -206,19 +215,45 @@ public class AttributesEditorPanel extends JPanel {
 
 	private void doAction(Window nextWindow) {
 		switch (this.getMode()) {
-		case "edit":
+		case "create":
+//			Check fields are not empty
+			if (isFieldsEmpty()) {
+				JOptionPane.showMessageDialog(getParentFrame(), "Rellene todos los campos antes de añadir");
+				return;
+			}
 
+//			TODO
+			if (/* Check if transaction was successful */true) {
+				JOptionPane.showMessageDialog(getParentFrame(), "Periférico añadido correctamente");
+				this.getParentFrame().goToCard(nextWindow);
+			} else {
+				JOptionPane.showMessageDialog(getParentFrame(), "Error, compruebe que los datos son correctos");
+			}
+			break;
+
+		case "update":
+			this.getPeripheral().setAttributes(attEditor.getAttributesHashMap());
+//			TODO
+			if (/* Check if transaction was successful */true) {
+				JOptionPane.showMessageDialog(getParentFrame(), "Periférico actualizado correctamente");
+				this.getParentFrame().goToCard(nextWindow);
+			} else {
+				JOptionPane.showMessageDialog(getParentFrame(), "Error, compruebe que los datos son correctos");
+			}
 			break;
 
 		case "delete":
-
+//			TODO
+			if (/* Check if transaction was successful */true) {
+				JOptionPane.showMessageDialog(getParentFrame(), "Periférico eliminado correctamente");
+				this.getParentFrame().goToCard(nextWindow);
+			} else {
+				JOptionPane.showMessageDialog(getParentFrame(), "Error a la hora de eliminar el periférico");
+			}
 			break;
 		default:
 			break;
 		}
-
-		JOptionPane.showMessageDialog(getParentFrame(), "adsa");
-		this.getParentFrame().goToCard(nextWindow);
 	}
 
 	private void checkEditable() {
@@ -230,5 +265,10 @@ public class AttributesEditorPanel extends JPanel {
 			priceSelector.setEditable(false);
 			attEditor.setEditable(false);
 		}
+	}
+
+	private boolean isFieldsEmpty() {
+		return textFieldName.getText().isBlank() || textFieldBrand.getText().isBlank()
+				|| textFieldDescription.getText().isBlank() || priceSelector.getPrice() <= 0;
 	}
 }

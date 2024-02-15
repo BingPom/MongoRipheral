@@ -33,12 +33,13 @@ public class ResultsTablePanel extends JPanel {
 	private DefaultTableModel tableModel = new DefaultTableModel(getPeripheralsData(), getPeripheralsFields()) {
 		private static final long serialVersionUID = 1L;
 		boolean[] columnEditables = new boolean[] { false, false, false, false, false };
-		
+
 		public boolean isCellEditable(int row, int column) {
 			return columnEditables[column];
 		}
 	};
 	private JTable table;
+	private ArrayList<String> peripheralsIds;
 	private MainWindow parentFrame;
 
 	public void updateTable(ArrayList<Peripheral> peripherals) {
@@ -46,7 +47,7 @@ public class ResultsTablePanel extends JPanel {
 		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 		tableModel.setDataVector(getPeripheralsData(), getPeripheralsFields());
 	}
-	
+
 	/**
 	 * Create the panel.
 	 */
@@ -104,35 +105,26 @@ public class ResultsTablePanel extends JPanel {
 	private Object[][] getPeripheralsData() {
 		return toObjectMatrix(this.getPeripherals());
 	}
-	
+
 	private Object[][] toObjectMatrix(ArrayList<Peripheral> peripherals) {
 		Object[][] result = new Object[peripherals.size()][getPeripheralsFields().length];
 		for (int i = 0; i < result.length; i++) {
-			result[i] = peripherals.get(i).toObjectArray(); 
+			result[i] = peripherals.get(i).toObjectArray();
 		}
 		return result;
 	}
-	
-	private void doAction(Window nextWindow) {
-		switch (this.getMode()) {
-		case "edit":
 
-			break;
-		case "delete":
-			JOptionPane.showMessageDialog(getParentFrame(), "adsa");
-			this.getParentFrame().goToCard(nextWindow);
-			break;
-		case "search":
-			if (table.getSelectedRow() >= 0) {
-				AttributesEditorPanel a = (AttributesEditorPanel) this.getParentFrame().getClassByWindow(nextWindow);
-				a.setPeripheral(getPeripherals().get(table.getSelectedRow()));
-				this.getParentFrame().goToCard(nextWindow);			
-			} else {
-				JOptionPane.showMessageDialog(parentFrame, "Ningún periférico seleccionado, seleccione uno antes de continuar");
-			}
-			break;
-		default:
-			break;
+	private void doAction(Window nextWindow) {
+//		Check a peripheral is selected
+		if (!(table.getSelectedRow() >= 0)) {
+			JOptionPane.showMessageDialog(parentFrame,
+					"Ningún periférico seleccionado, seleccione uno antes de continuar");
+			return;
 		}
+		
+		AttributesEditorPanel a = (AttributesEditorPanel) this.getParentFrame().getClassByWindow(nextWindow);
+		a.setPeripheral(this.getPeripherals().get(table.getSelectedRow()));
+		a.setPeripheralId(this.getPeripheralsIds().get(table.getSelectedRow()));
+		this.getParentFrame().goToCard(nextWindow);
 	}
 }

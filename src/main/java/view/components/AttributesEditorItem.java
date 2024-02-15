@@ -84,5 +84,4 @@ public class AttributesEditorItem extends JPanel {
 		textFieldAttributeName.setEditable(enabled);
 		textFieldAttributeValue.setEditable(enabled);
 	}
-
 }

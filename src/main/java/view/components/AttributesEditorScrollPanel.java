@@ -167,4 +167,12 @@ public class AttributesEditorScrollPanel extends JPanel {
 			deleteItem(0);
 		}
 	}
+	
+	public HashMap<String, String> getAttributesHashMap() {
+		HashMap<String, String> result = new HashMap<String, String>();
+		for (AttributesEditorItem item : this.items) {
+			result.put(item.getAttributeName(), item.getAttributeValue());
+		}
+		return result;
+	}
 }

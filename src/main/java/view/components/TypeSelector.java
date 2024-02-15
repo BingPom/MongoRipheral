@@ -66,6 +66,7 @@ public class TypeSelector extends JPanel {
 	 * Create the panel.
 	 */
 	public TypeSelector(boolean allOptionEnabled) {
+		this.setAllOptionEnabled(allOptionEnabled);
 		setSize(new Dimension(300, 23));
 		
 		textFieldType = new JTextField();
@@ -110,7 +111,7 @@ public class TypeSelector extends JPanel {
 			types.add(type.toString());
 		}
 		types.add("Otro");
-//		if (this.isAllOptionEnabled()) 
+		if (this.isAllOptionEnabled()) 
 			types.add("Todos");
 		
 		return types.toArray(String[]::new);

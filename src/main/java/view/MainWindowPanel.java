@@ -10,6 +10,8 @@ import enums.Window;
 import model.Peripheral;
 
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.awt.event.ActionEvent;
 
 public class MainWindowPanel extends JPanel {
@@ -47,6 +49,22 @@ public class MainWindowPanel extends JPanel {
 		JButton btnUpdate = new JButton("Actualizar");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+//				TODO retrieve data from all peripherals
+				ArrayList<String> peripheralsIds = new ArrayList<String>();
+				peripheralsIds.add("1001");
+				peripheralsIds.add("2002");
+				ArrayList<Peripheral> peripherals = new ArrayList<Peripheral>();
+				peripherals.add(Peripheral.builder().name("Teclado1").type("Teclado").brand("Marca1").price(100d)
+						.description("Es un teclado 1").build());
+				peripherals.add(Peripheral.builder().name("Cascos1").type("Cascosasdsad").brand("Marca2")
+						.price(200d).description("Es un casco 1").attributes(new HashMap<String, String>() {
+							{
+								put("att1", "valor1");
+							}
+						}).build());
+				ResultsTablePanel n = (ResultsTablePanel) parent.getClassByWindow(Window.Update_Main_Window);
+				n.updateTable(peripherals);
+				n.setPeripheralsIds(peripheralsIds);
 				parent.goToCard(Window.Update_Main_Window);
 			}
 		});
@@ -55,6 +73,22 @@ public class MainWindowPanel extends JPanel {
 		JButton btnDelete = new JButton("Borrar");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+//				TODO retrieve data from all peripherals
+				ArrayList<String> peripheralsIds = new ArrayList<String>();
+				peripheralsIds.add("1001");
+				peripheralsIds.add("2002");
+				ArrayList<Peripheral> peripherals = new ArrayList<Peripheral>();
+				peripherals.add(Peripheral.builder().name("Teclado1").type("Teclado").brand("Marca1").price(100d)
+						.description("Es un teclado 1").build());
+				peripherals.add(Peripheral.builder().name("Cascos1").type("Cascosasdsad").brand("Marca2")
+						.price(200d).description("Es un casco 1").attributes(new HashMap<String, String>() {
+							{
+								put("att1", "valor1");
+							}
+						}).build());
+				ResultsTablePanel n = (ResultsTablePanel) parent.getClassByWindow(Window.Delete_Main_Window);
+				n.updateTable(peripherals);
+				n.setPeripheralsIds(peripheralsIds);
 				parent.goToCard(Window.Delete_Main_Window);
 			}
 		});

@@ -52,7 +52,7 @@ public class MainWindow extends JFrame {
 		ResultsTablePanel deleteMainPage = new ResultsTablePanel(this, "delete", Window.Main_Window,
 				Window.Delete_Attributes_Editor);
 		AttributesEditorPanel deleteAttributesEditor = new AttributesEditorPanel(this, "delete",
-				Window.Delete_Main_Window, Window.Main_Window);
+				Window.Delete_Main_Window, Window.Delete_Main_Window);
 
 		container.add(Window.Main_Window.name.toString(), mainWindow);
 

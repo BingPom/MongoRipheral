@@ -80,6 +80,9 @@ public class FiltersPanel extends JPanel {
 							"El tipo no puede estar vacío, escríbalo o seleccione otra opción.");
 				} else {
 //					TODO calls to controller and send results to next page
+					ArrayList<String> peripheralsIds = new ArrayList<String>();
+					peripheralsIds.add("1001");
+					peripheralsIds.add("2002");
 					ArrayList<Peripheral> peripherals = new ArrayList<Peripheral>();
 					peripherals.add(Peripheral.builder().name("Teclado1").type("Teclado").brand("Marca1").price(100d)
 							.description("Es un teclado 1").build());
@@ -91,6 +94,7 @@ public class FiltersPanel extends JPanel {
 							}).build());
 					ResultsTablePanel n = (ResultsTablePanel) parent.getClassByWindow(nextPage);
 					n.updateTable(peripherals);
+					n.setPeripheralsIds(peripheralsIds);
 					parent.goToCard(nextPage);
 				}
 			}

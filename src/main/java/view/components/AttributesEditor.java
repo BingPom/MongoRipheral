@@ -76,4 +76,8 @@ public class AttributesEditor extends JPanel {
 	public void dropData() {
 		attributesScrollPanel.dropData();
 	}
+	
+	public HashMap<String, String> getAttributesHashMap() {
+		return attributesScrollPanel.getAttributesHashMap();
+	}
 }
