@@ -60,11 +60,22 @@ public class AttributesEditorPanel extends JPanel {
 
 	public void setPeripheral(Peripheral peripheral) {
 		this.peripheral = peripheral;
-		textFieldName.setText(this.getPeripheral().getName());
-		typeSelector.updateType(this.getPeripheral().getType());
-		textFieldBrand.setText(this.getPeripheral().getBrand());
-		priceSelector.updatePrice(this.getPeripheral().getPrice());
-		textFieldDescription.setText(this.getPeripheral().getDescription());
+		textFieldName.setText(peripheral.getName() == null ? "" : this.getPeripheral().getName());
+		typeSelector.updateType(peripheral.getType() == null ? "Teclado" : this.getPeripheral().getType());
+		textFieldBrand.setText(peripheral.getBrand() == null ? "" : this.getPeripheral().getBrand());
+		priceSelector.updatePrice(peripheral.getPrice() == null ? 0 : this.getPeripheral().getPrice());
+		textFieldDescription.setText(peripheral.getDescription() == null ? "" : this.getPeripheral().getDescription());
+		if (peripheral.getAttributes() != null) {
+			attEditor.updateData(peripheral.getAttributes());
+			if (mode.equalsIgnoreCase("view")) {
+				attEditor.setEditable(false);
+			}
+		} else {
+			attEditor.dropData();
+			if (mode.equalsIgnoreCase("view")) {
+				attEditor.setEditable(false);
+			}
+		}
 	}
 
 	/**
@@ -73,7 +84,7 @@ public class AttributesEditorPanel extends JPanel {
 	public AttributesEditorPanel(MainWindow parent, String mode, Window previousWindow, Window nextWindow) {
 		setParentFrame(parent);
 		this.setMode(mode);
-		
+
 		setLayout(null);
 
 		JLabel lblHeadText = new JLabel("Introduzca los datos del producto a añadir: ");
@@ -94,17 +105,21 @@ public class AttributesEditorPanel extends JPanel {
 		attEditor.setForeground(new Color(0, 0, 0));
 		attEditor.setBorder(null);
 		attEditor.setLocation(46, 222);
+		attEditor.setVisible(true);
 		add(attEditor);
 
-		JButton btnCrear = new JButton();
-		setButtonText(btnCrear);
-		btnCrear.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				doAction(nextWindow);
-			}
-		});
-		btnCrear.setBounds(424, 498, 89, 23);
-		add(btnCrear);
+//		In view mode there´s no button in the bottom-right corner
+		if (!mode.equalsIgnoreCase("view")) {
+			JButton btnAction = new JButton();
+			setButtonText(btnAction);
+			btnAction.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					doAction(nextWindow);
+				}
+			});
+			btnAction.setBounds(424, 498, 89, 23);
+			add(btnAction);
+		}
 
 		JLabel lblName = new JLabel("Nombre: ");
 		lblName.setBounds(46, 54, 46, 14);
@@ -125,7 +140,7 @@ public class AttributesEditorPanel extends JPanel {
 		lblType.setBounds(46, 88, 46, 14);
 		add(lblType);
 
-		typeSelector = new TypeSelector();
+		typeSelector = new TypeSelector(false);
 		typeSelector.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				getPeripheral().setType(typeSelector.getType());
@@ -133,7 +148,7 @@ public class AttributesEditorPanel extends JPanel {
 		});
 		typeSelector.setBounds(102, 84, 300, 23);
 		add(typeSelector);
-		
+
 		JLabel lblBrand = new JLabel("Marca: ");
 		lblBrand.setBounds(46, 122, 46, 14);
 		add(lblBrand);
@@ -156,11 +171,11 @@ public class AttributesEditorPanel extends JPanel {
 		JLabel lblPrice = new JLabel("Precio: ");
 		lblPrice.setBounds(46, 156, 46, 14);
 		add(lblPrice);
-		
+
 		JLabel lblDescription = new JLabel("Descripción: ");
 		lblDescription.setBounds(46, 192, 80, 14);
 		add(lblDescription);
-		
+
 		textFieldDescription = new JTextField();
 		textFieldDescription.setText(this.getPeripheral().getDescription());
 		textFieldDescription.addCaretListener(new CaretListener() {
@@ -171,22 +186,20 @@ public class AttributesEditorPanel extends JPanel {
 		textFieldDescription.setColumns(40);
 		textFieldDescription.setBounds(112, 189, 334, 20);
 		add(textFieldDescription);
-		
-		attEditor.setVisible(true);
 
 		checkEditable();
 	}
 
-	private void setButtonText(JButton btnCrear) {
+	private void setButtonText(JButton btnAction) {
 		switch (this.getMode()) {
 		case "create":
-			btnCrear.setText("Añadir");
+			btnAction.setText("Añadir");
 			break;
 		case "edit":
-			btnCrear.setText("Guardar");
+			btnAction.setText("Guardar");
 			break;
 		default:
-			btnCrear.setText("Error");
+			btnAction.setText("Error");
 			break;
 		}
 	}
@@ -200,10 +213,6 @@ public class AttributesEditorPanel extends JPanel {
 		case "delete":
 
 			break;
-			
-		case "view":
-			
-			break;
 		default:
 			break;
 		}
@@ -211,7 +220,7 @@ public class AttributesEditorPanel extends JPanel {
 		JOptionPane.showMessageDialog(getParentFrame(), "adsa");
 		this.getParentFrame().goToCard(nextWindow);
 	}
-	
+
 	private void checkEditable() {
 		if (this.getMode().equalsIgnoreCase("view") || this.getMode().equalsIgnoreCase("delete")) {
 			textFieldName.setEditable(false);

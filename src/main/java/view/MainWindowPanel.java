@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import enums.Window;
+import model.Peripheral;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -23,6 +24,26 @@ public class MainWindowPanel extends JPanel {
 		parent = frame;
 		setLayout(null);
 
+		JButton btnSearch = new JButton("Buscar");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FiltersPanel a = (FiltersPanel) parent.getClassByWindow(Window.Search_Main_Window);
+				a.resetFields();
+				parent.goToCard(Window.Search_Main_Window);
+			}
+		});
+		btnSearch.setBounds(23, 133, 79, 23);
+		
+		JButton btnAdd = new JButton("Añadir");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AttributesEditorPanel a = (AttributesEditorPanel) parent.getClassByWindow(Window.Add_Main_Window);
+				a.setPeripheral(new Peripheral());
+				parent.goToCard(Window.Add_Main_Window);
+			}
+		});
+		btnAdd.setBounds(124, 133, 79, 23);
+		
 		JButton btnUpdate = new JButton("Actualizar");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -32,28 +53,12 @@ public class MainWindowPanel extends JPanel {
 		btnUpdate.setBounds(227, 133, 79, 23);
 		
 		JButton btnDelete = new JButton("Borrar");
-		btnDelete.setBounds(329, 133, 79, 23);
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parent.goToCard(Window.Delete_Main_Window);
 			}
 		});
-		
-		JButton btnSearch = new JButton("Buscar");
-		btnSearch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				parent.goToCard(Window.Search_Main_Window);
-			}
-		});
-		btnSearch.setBounds(23, 133, 79, 23);
-		
-		JButton btnAdd = new JButton("Añadir");
-		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				parent.goToCard(Window.Add_Main_Window);
-			}
-		});
-		btnAdd.setBounds(124, 133, 79, 23);
+		btnDelete.setBounds(329, 133, 79, 23);
 		
 		JLabel lblSelectOption = new JLabel("Seleccione una opción:");
 		lblSelectOption.setBounds(30, 101, 168, 14);

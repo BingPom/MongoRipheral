@@ -31,7 +31,17 @@ public class AttributesEditorItem extends JPanel {
 	public void setAttributeValue(String attributeValue) {
 		this.attributeValue = attributeValue;
 	}
-
+	public void setValues(String name, String value) {
+		setAttributeName(name);
+		setAttributeValue(value);
+	}
+	public AttributesEditorItem(String name, String value) {
+		this();
+		setValues(name, value);
+		textFieldAttributeName.setText(name);
+		textFieldAttributeValue.setText(value);
+	}
+	
 	/**
 	 * Create the panel.
 	 */

@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
@@ -24,6 +25,7 @@ public class FiltersPanel extends JPanel {
 	private MainWindow parent;
 	private JTextField textFieldName;
 	private JTextField textFieldBrand;
+	private TypeSelector typeSelector;
 	private PriceRangeSelector priceRangeSelector;
 	private PeripheralController controller = new PeripheralController();
 
@@ -60,7 +62,7 @@ public class FiltersPanel extends JPanel {
 		btnBack.setBounds(10, 206, 89, 23);
 		add(btnBack);
 
-		TypeSelector typeSelector = new TypeSelector();
+		typeSelector = new TypeSelector(true);
 		typeSelector.setBounds(88, 81, 300, 23);
 		add(typeSelector);
 
@@ -79,8 +81,14 @@ public class FiltersPanel extends JPanel {
 				} else {
 //					TODO calls to controller and send results to next page
 					ArrayList<Peripheral> peripherals = new ArrayList<Peripheral>();
-					peripherals.add(Peripheral.builder().name("Teclado1").type("Teclado").brand("Marca1").price(100d).description("Es un teclado 1").build());
-					peripherals.add(Peripheral.builder().name("Cascos1").type("Cascosasdsad").brand("Marca2").price(200d).description("Es un casco 1").build());
+					peripherals.add(Peripheral.builder().name("Teclado1").type("Teclado").brand("Marca1").price(100d)
+							.description("Es un teclado 1").build());
+					peripherals.add(Peripheral.builder().name("Cascos1").type("Cascosasdsad").brand("Marca2")
+							.price(200d).description("Es un casco 1").attributes(new HashMap<String, String>() {
+								{
+									put("att1", "valor1");
+								}
+							}).build());
 					ResultsTablePanel n = (ResultsTablePanel) parent.getClassByWindow(nextPage);
 					n.updateTable(peripherals);
 					parent.goToCard(nextPage);
@@ -107,5 +115,12 @@ public class FiltersPanel extends JPanel {
 		textFieldBrand.setBounds(88, 117, 148, 20);
 		add(textFieldBrand);
 		textFieldBrand.setColumns(10);
+	}
+	
+	public void resetFields() {
+		textFieldName.setText("");
+		textFieldBrand.setText("");
+		typeSelector.updateType("Todos");
+		priceRangeSelector.updateValues(0, 100);
 	}
 }

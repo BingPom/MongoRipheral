@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.awt.event.ActionEvent;
 
 public class AttributesEditorScrollPanel extends JPanel {
@@ -73,6 +74,28 @@ public class AttributesEditorScrollPanel extends JPanel {
 		this.revalidate();
 		this.repaint();
 	}
+	
+	private void addItem(String name, String value) {
+		int space = getSpaceBetweenItems();
+		int index = items.size();
+		
+		items.add(new AttributesEditorItem(name, value));
+		items.get(index).setLocation(10, space);
+		add(items.get(index));
+		
+		buttons.add(new JButton("─"));
+		buttons.get(index).setBounds(327, space, 41, 23);
+		buttons.get(index).putClientProperty("index", index);
+		buttons.get(index).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				deleteItem((Integer) ((JButton) e.getSource()).getClientProperty("index"));
+			}
+		});
+		add(buttons.get(index));
+
+		this.revalidate();
+		this.repaint();
+	}
 
 	private void deleteItem(int index) {
 		if (items.size() <= 1) {
@@ -126,5 +149,22 @@ public class AttributesEditorScrollPanel extends JPanel {
 		}
 		btnAdd.setEnabled(enabled);
 		btnAdd.setVisible(enabled);
+	}
+	
+	public void updateAttributes(HashMap<String, String> data) {
+		for (int i = 0; i < items.size(); i++) {
+			deleteItem(0);
+		}
+		for (String item : data.keySet()) {
+			addItem(item, data.get(item));
+		}
+		deleteItem(0);
+	}
+	
+	public void dropData() {
+		addItem();
+		for (int i = 0; i < items.size(); i++) {
+			deleteItem(0);
+		}
 	}
 }

@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import java.awt.Dimension;
+import java.util.HashMap;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -66,5 +67,13 @@ public class AttributesEditor extends JPanel {
 	
 	public void setEditable(boolean enabled) {
 		attributesScrollPanel.setEditable(enabled);
+	}
+	
+	public void updateData(HashMap<String, String> data) {
+		attributesScrollPanel.updateAttributes(data);
+	}
+	
+	public void dropData() {
+		attributesScrollPanel.dropData();
 	}
 }

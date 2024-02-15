@@ -16,6 +16,8 @@ public class PriceRangeSelector extends JPanel {
 	private double cielingPrice;
 	private double minPrice;
 	private double maxPrice;
+	private JSpinner spinnerMinPrice;
+	private JSpinner spinnerMaxPrice;	
 
 	public double getMinPrice() {
 		return minPrice;
@@ -67,6 +69,13 @@ public class PriceRangeSelector extends JPanel {
 //		If all checks passed, assign new value
 		this.maxPrice = maxPrice;
 	}
+	
+	public void updateValues(double minPrice, double maxPrice) {
+		setMaxPrice(maxPrice);
+		setMinPrice(minPrice);
+		spinnerMaxPrice.setValue(maxPrice);
+		spinnerMinPrice.setValue(minPrice);
+	}
 
 	/**
 	 * Create the component.
@@ -83,7 +92,7 @@ public class PriceRangeSelector extends JPanel {
 
 //		First Spinner
 		SpinnerNumberModel priceSpinnerModelMinPrice = new SpinnerNumberModel(startingMinPrice, 0d, null, 1.00d);
-		JSpinner spinnerMinPrice = new JSpinner(priceSpinnerModelMinPrice);
+		spinnerMinPrice = new JSpinner(priceSpinnerModelMinPrice);
 		spinnerMinPrice.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -103,7 +112,7 @@ public class PriceRangeSelector extends JPanel {
 		
 //		Second Spinner
 		SpinnerNumberModel priceSpinnerModelMaxPrice = new SpinnerNumberModel(startingMaxPrice, 0d, cielingPrice, 1.00d);
-		JSpinner spinnerMaxPrice = new JSpinner(priceSpinnerModelMaxPrice);
+		spinnerMaxPrice = new JSpinner(priceSpinnerModelMaxPrice);
 		spinnerMaxPrice.addChangeListener(new ChangeListener() {	
 			@Override
 			public void stateChanged(ChangeEvent e) {

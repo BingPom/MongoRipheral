@@ -22,8 +22,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -44,12 +42,9 @@ public class ResultsTablePanel extends JPanel {
 	private MainWindow parentFrame;
 
 	public void updateTable(ArrayList<Peripheral> peripherals) {
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		model.fireTableDataChanged();
 		setPeripherals(peripherals);
-		tableModel.fireTableDataChanged();
-		revalidate();
-		repaint();
+		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+		tableModel.setDataVector(getPeripheralsData(), getPeripheralsFields());
 	}
 	
 	/**
@@ -68,7 +63,6 @@ public class ResultsTablePanel extends JPanel {
 		scrollPane.setViewportView(table);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setModel(tableModel);
-		
 		TableColumnModel tcm = table.getColumnModel();
 		tcm.getColumn(0).setPreferredWidth(150);
 		tcm.getColumn(1).setPreferredWidth(150);

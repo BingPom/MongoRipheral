@@ -24,6 +24,7 @@ public class TypeSelector extends JPanel {
 	private String otherType = new String();
 	private JComboBox<String> comboBoxType;
 	private JTextField textFieldType;
+	private boolean allOptionEnabled;
 	
 	public String getType() {
 		return type;
@@ -64,7 +65,7 @@ public class TypeSelector extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public TypeSelector() {
+	public TypeSelector(boolean allOptionEnabled) {
 		setSize(new Dimension(300, 23));
 		
 		textFieldType = new JTextField();
@@ -97,13 +98,21 @@ public class TypeSelector extends JPanel {
 		add(textFieldType);
 	}
 	
+	public boolean isAllOptionEnabled() {
+		return allOptionEnabled;
+	}
+	public void setAllOptionEnabled(boolean allOptionEnabled) {
+		this.allOptionEnabled = allOptionEnabled;
+	}
 	private String[] getTypes() {
 		ArrayList<String> types = new ArrayList<String>();
 		for (PeripheralTypes type : PeripheralTypes.values()) {
 			types.add(type.toString());
 		}
 		types.add("Otro");
-		types.add("Todos");
+//		if (this.isAllOptionEnabled()) 
+			types.add("Todos");
+		
 		return types.toArray(String[]::new);
 	}
 	
