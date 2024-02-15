@@ -19,6 +19,9 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.event.CaretListener;
+
+import controller.PeripheralController;
+
 import javax.swing.event.CaretEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -38,6 +41,7 @@ public class AttributesEditorPanel extends JPanel {
 	private MainWindow parentFrame;
 	private JTextField textFieldDescription;
 	private String peripheralId;
+	private PeripheralController controller = new PeripheralController();
 
 	public String getPeripheralId() {
 		return peripheralId;
@@ -223,7 +227,8 @@ public class AttributesEditorPanel extends JPanel {
 			}
 
 //			TODO
-			if (/* Check if transaction was successful */true) {
+			this.getPeripheral().setAttributes(attEditor.getAttributesHashMap());
+			if (controller.create(this.getPeripheral()) != null) {
 				JOptionPane.showMessageDialog(getParentFrame(), "Periférico añadido correctamente");
 				this.getParentFrame().goToCard(nextWindow);
 			} else {

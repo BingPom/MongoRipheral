@@ -18,10 +18,10 @@ public class PeripheralController extends AbstractPeripheralController {
 		super();
 	}
 
-	public void create(Peripheral peripheral) {
+	public Object create(Peripheral peripheral) {
 		getPeripheralCollection(peripheral);
 
-		super.insert(peripheral);
+		return super.insert(peripheral);
 	}
 
 	public List<Peripheral> findByName(String nombre) {

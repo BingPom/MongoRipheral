@@ -12,6 +12,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoIterable;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.InsertOneResult;
 
 import db.MongoDriver;
 import lombok.Setter;
@@ -24,12 +25,12 @@ public abstract class AbstractPeripheralController implements IPeripheralControl
 		MongoDriver.getClient();
 	}
 
-	public void insert(Peripheral peripheral) {
+	public Object insert(Peripheral peripheral) {
 		Document document = new Document("name", peripheral.getName()).append("price", peripheral.getPrice())
 				.append("brand", peripheral.getBrand()).append("description", peripheral.getDescription())
 				.append("type", peripheral.getType()).append("attributes", peripheral.getAttributes());
 
-		collection.insertOne(document);
+		return collection.insertOne(document);
 	}
 
 	public void update(String name, Peripheral updatedPeripheral) {

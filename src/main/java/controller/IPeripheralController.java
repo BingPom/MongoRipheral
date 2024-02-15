@@ -12,8 +12,9 @@ public interface IPeripheralController {
 	 * Insert a new peripheral into the database
 	 * 
 	 * @param peripheral The new peripheral to insert
+	 * @return 
 	 */
-	public void insert(Peripheral peripheral);
+	public Object insert(Peripheral peripheral);
 
 	/**
 	 * Get all the peripheral stored in the database
