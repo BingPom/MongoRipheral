@@ -30,13 +30,12 @@ public abstract class AbstractPeripheralController implements IPeripheralControl
 	}
 
 	public Object update(String id, Peripheral updatedPeripheral) {
-		return collection.updateOne(Filters.and(Filters.eq("id", id)),
-				new Document("$set",
-						new Document("name", updatedPeripheral.getName()).append("price", updatedPeripheral.getPrice())
-								.append("brand", updatedPeripheral.getBrand())
-								.append("description", updatedPeripheral.getDescription())
-								.append("type", updatedPeripheral.getType())
-								.append("attributes", updatedPeripheral.getAttributes())));
+		Document updatedDocument = new Document("$set", new Document("name", updatedPeripheral.getName())
+				.append("price", updatedPeripheral.getPrice()).append("brand", updatedPeripheral.getBrand())
+				.append("description", updatedPeripheral.getDescription()).append("type", updatedPeripheral.getType())
+				.append("attributes", updatedPeripheral.getAttributes()));
+
+		return collection.updateOne(Filters.eq("_id", id), updatedDocument);
 	}
 
 	@Override
