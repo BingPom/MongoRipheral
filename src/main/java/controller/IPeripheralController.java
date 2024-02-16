@@ -37,16 +37,18 @@ public interface IPeripheralController {
 	 * 
 	 * @param name              Name of the peripheral to update
 	 * @param updatedPeripheral The updated data of the peripheral
+	 * @return 
 	 */
-	public void update(String name, Peripheral updatedPeripheral);
+	public Object update(String name, Peripheral updatedPeripheral);
 
 	/**
 	 * Delete fron the database the given peripheral
 	 * 
 	 * @param name The name of the peripheral to be deleted
 	 * @param id   The id of the peripheral to be deleted
+	 * @return 
 	 */
-	public void delete(String name, String id);
+	public Object delete(String name, String id);
 
 	/**
 	 * A help method to translate a Document from database into a Peripheral object

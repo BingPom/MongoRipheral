@@ -20,6 +20,7 @@ import javax.swing.RowFilter;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 
@@ -42,8 +43,22 @@ public class ResultsTablePanel extends JPanel {
 	private ArrayList<String> peripheralsIds;
 	private MainWindow parentFrame;
 
+//	TODO To delete after transition
 	public void updateTable(ArrayList<Peripheral> peripherals) {
 		setPeripherals(peripherals);
+		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+		tableModel.setDataVector(getPeripheralsData(), getPeripheralsFields());
+	}
+	
+	public void updateTable(HashMap<String, Peripheral> dataHashMap) {
+		ArrayList<String> ids = new ArrayList<String>();
+		ArrayList<Peripheral> data = new ArrayList<Peripheral>();
+		for (String peripheralId : dataHashMap.keySet()) {
+			ids.add(peripheralId);
+			data.add(dataHashMap.get(peripheralId));
+		}
+		setPeripheralsIds(ids);
+		setPeripherals(data);
 		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 		tableModel.setDataVector(getPeripheralsData(), getPeripheralsFields());
 	}
