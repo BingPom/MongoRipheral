@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoIterable;
@@ -35,7 +36,7 @@ public abstract class AbstractPeripheralController implements IPeripheralControl
 				.append("description", updatedPeripheral.getDescription()).append("type", updatedPeripheral.getType())
 				.append("attributes", updatedPeripheral.getAttributes()));
 
-		return collection.updateOne(Filters.eq("_id", id), updatedDocument);
+		return collection.updateOne(Filters.eq("_id", new ObjectId(id)), updatedDocument);
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public abstract class AbstractPeripheralController implements IPeripheralControl
 
 	@Override
 	public Object delete(String name, String id) {
-		return collection.deleteOne(Filters.and(Filters.eq("_id", id),Filters.eq("name", name)));
+		return collection.deleteOne(Filters.and(Filters.eq("_id", new ObjectId(id)), Filters.eq("name", name)));
 	}
 
 	@Override
@@ -66,8 +67,8 @@ public abstract class AbstractPeripheralController implements IPeripheralControl
 
 		for (String collectionName : collectionNames) {
 			collection = MongoDriver.getDatabase().getCollection(collectionName);
-			collection.find()
-					.forEach(document -> peripherals.put(document.getObjectId("_id").toString(), documentToPeripheral(document)));
+			collection.find().forEach(document -> peripherals.put(document.getObjectId("_id").toString(),
+					documentToPeripheral(document)));
 		}
 
 		return peripherals;
