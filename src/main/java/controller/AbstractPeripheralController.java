@@ -3,19 +3,17 @@ package controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+
 import java.util.regex.Pattern;
 
 import org.bson.Document;
 
-import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoIterable;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.result.InsertOneResult;
 
 import db.MongoDriver;
-import lombok.Setter;
+
 import model.Peripheral;
 
 public abstract class AbstractPeripheralController implements IPeripheralController {
@@ -33,14 +31,13 @@ public abstract class AbstractPeripheralController implements IPeripheralControl
 		return collection.insertOne(document);
 	}
 
-	public void update(String id, Peripheral updatedPeripheral) {
-		collection.updateOne(Filters.and(Filters.eq("id", id)),
-				new Document("$set",
-						new Document("name", updatedPeripheral.getName()).append("price", updatedPeripheral.getPrice())
-								.append("brand", updatedPeripheral.getBrand())
-								.append("description", updatedPeripheral.getDescription())
-								.append("type", updatedPeripheral.getType())
-								.append("attributes", updatedPeripheral.getAttributes())));
+	public Object update(String id, Peripheral updatedPeripheral) {
+		Document updatedDocument = new Document("$set", new Document("name", updatedPeripheral.getName())
+				.append("price", updatedPeripheral.getPrice()).append("brand", updatedPeripheral.getBrand())
+				.append("description", updatedPeripheral.getDescription()).append("type", updatedPeripheral.getType())
+				.append("attributes", updatedPeripheral.getAttributes()));
+
+		return collection.updateOne(Filters.eq("_id", id), updatedDocument);
 	}
 
 	@Override
