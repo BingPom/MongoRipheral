@@ -94,17 +94,17 @@ public class PeripheralController extends AbstractPeripheralController {
 		collection.find(filter).forEach(document -> peripherals.add(documentToPeripheral(document)));
 	}
 
-	public void update(String id, Peripheral peripheral) {
+	public Object update(String id, Peripheral peripheral) {
 		getPeripheralCollection(peripheral);
 
-		super.update(id, peripheral);
+		return super.update(id, peripheral);
 
 	}
 
-	public void delete(Peripheral peripheral, String id) {
+	public Object delete(Peripheral peripheral, String id) {
 		getPeripheralCollection(peripheral);
 
-		super.delete(peripheral.getName(), id);
+		return super.delete(peripheral.getName(), id);
 	}
 
 	private void getPeripheralCollection(Peripheral peripheral) {

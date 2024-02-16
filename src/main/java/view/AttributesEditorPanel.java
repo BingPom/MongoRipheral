@@ -218,16 +218,14 @@ public class AttributesEditorPanel extends JPanel {
 	}
 
 	private void doAction(Window nextWindow) {
+//		Check fields are not empty
+		if (isFieldsEmpty()) {
+			JOptionPane.showMessageDialog(getParentFrame(), "Rellene todos los campos");
+			return;
+		}
+		this.getPeripheral().setAttributes(attEditor.getAttributesHashMap());
 		switch (this.getMode()) {
 		case "create":
-//			Check fields are not empty
-			if (isFieldsEmpty()) {
-				JOptionPane.showMessageDialog(getParentFrame(), "Rellene todos los campos antes de añadir");
-				return;
-			}
-
-//			TODO
-			this.getPeripheral().setAttributes(attEditor.getAttributesHashMap());
 			if (controller.create(this.getPeripheral()) != null) {
 				JOptionPane.showMessageDialog(getParentFrame(), "Periférico añadido correctamente");
 				this.getParentFrame().goToCard(nextWindow);
@@ -237,9 +235,7 @@ public class AttributesEditorPanel extends JPanel {
 			break;
 
 		case "update":
-			this.getPeripheral().setAttributes(attEditor.getAttributesHashMap());
-//			TODO
-			if (/* Check if transaction was successful */true) {
+			if (controller.update(this.getPeripheralId(), this.getPeripheral()) != null) {
 				JOptionPane.showMessageDialog(getParentFrame(), "Periférico actualizado correctamente");
 				this.getParentFrame().goToCard(nextWindow);
 			} else {
@@ -248,8 +244,7 @@ public class AttributesEditorPanel extends JPanel {
 			break;
 
 		case "delete":
-//			TODO
-			if (/* Check if transaction was successful */true) {
+			if (controller.delete(this.getPeripheral(), this.getPeripheralId()) != null) {
 				JOptionPane.showMessageDialog(getParentFrame(), "Periférico eliminado correctamente");
 				this.getParentFrame().goToCard(nextWindow);
 			} else {
