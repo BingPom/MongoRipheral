@@ -8,7 +8,7 @@ import view.ResultsTablePanel;
 public class dbUtils {
 
 	public static void findAllAndUpdateTable(MainWindow parent, PeripheralController controller, Window nextPage) {
-		ResultsTablePanel n = (ResultsTablePanel) parent.getClassByWindow(Window.Delete_Main_Window);
+		ResultsTablePanel n = (ResultsTablePanel) parent.getClassByWindow(nextPage);
 		n.updateTable(controller.findAll());
 		parent.goToCard(nextPage);
 	}
