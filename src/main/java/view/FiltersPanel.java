@@ -68,7 +68,8 @@ public class FiltersPanel extends JPanel {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Get peripheral and price range
-				Peripheral p = Peripheral.builder().name(textFieldName.getText()).type(typeSelector.getSelectedType())
+				Peripheral p = Peripheral.builder().name(textFieldName.getText())
+						.type(typeSelector.getSelectedType() == "Todos" ? null : typeSelector.getSelectedType())
 						.brand(textFieldBrand.getText()).build();
 				double minPrice = priceRangeSelector.getMinPrice();
 				double maxPrice = priceRangeSelector.getMaxPrice();

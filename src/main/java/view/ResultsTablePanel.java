@@ -20,6 +20,7 @@ import javax.swing.RowFilter;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -46,6 +47,7 @@ public class ResultsTablePanel extends JPanel {
 
 	public void updateTable(List<Peripheral> peripherals) {
 		setPeripherals(peripherals);
+		setPeripheralsIds(new ArrayList<String>(Collections.nCopies(this.getPeripherals().size(), "1")));
 		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 		tableModel.setDataVector(getPeripheralsData(), getPeripheralsFields());
 	}

@@ -244,7 +244,7 @@ public class AttributesEditorPanel extends JPanel {
 		case "create":
 			if (controller.create(this.getPeripheral()) != null) {
 				JOptionPane.showMessageDialog(getParentFrame(), "Periférico añadido correctamente");
-				dbUtils.findAllAndUpdateTable(this.getParentFrame(), controller, nextWindow);
+				this.getParentFrame().goToCard(nextWindow);
 			} else {
 				JOptionPane.showMessageDialog(getParentFrame(), "Error, compruebe que los datos son correctos");
 			}
