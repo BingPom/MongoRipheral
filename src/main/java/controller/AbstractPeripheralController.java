@@ -3,19 +3,15 @@ package controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.bson.Document;
 
-import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoIterable;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.result.InsertOneResult;
 
 import db.MongoDriver;
-import lombok.Setter;
 import model.Peripheral;
 
 public abstract class AbstractPeripheralController implements IPeripheralController {
@@ -33,8 +29,8 @@ public abstract class AbstractPeripheralController implements IPeripheralControl
 		return collection.insertOne(document);
 	}
 
-	public void update(String id, Peripheral updatedPeripheral) {
-		collection.updateOne(Filters.and(Filters.eq("id", id)),
+	public Object update(String id, Peripheral updatedPeripheral) {
+		return collection.updateOne(Filters.and(Filters.eq("id", id)),
 				new Document("$set",
 						new Document("name", updatedPeripheral.getName()).append("price", updatedPeripheral.getPrice())
 								.append("brand", updatedPeripheral.getBrand())
@@ -67,7 +63,6 @@ public abstract class AbstractPeripheralController implements IPeripheralControl
 
 	@Override
 	public HashMap<String, Peripheral> findAll() {
-		// List<String> peripheralId = new ArrayList<>();
 		HashMap<String, Peripheral> peripherals = new HashMap<String, Peripheral>();
 
 		MongoIterable<String> collectionNames = MongoDriver.getDatabase().listCollectionNames();
@@ -75,7 +70,7 @@ public abstract class AbstractPeripheralController implements IPeripheralControl
 		for (String collectionName : collectionNames) {
 			collection = MongoDriver.getDatabase().getCollection(collectionName);
 			collection.find()
-					.forEach(document -> peripherals.put(document.getString("_id"), documentToPeripheral(document)));
+					.forEach(document -> peripherals.put(document.getObjectId("_id").toString(), documentToPeripheral(document)));
 		}
 
 		return peripherals;

@@ -21,6 +21,7 @@ import javax.swing.RowFilter;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 
@@ -30,7 +31,7 @@ public class ResultsTablePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private String mode;
-	private ArrayList<Peripheral> peripherals = new ArrayList<Peripheral>();
+	private List<Peripheral> peripherals = new ArrayList<Peripheral>();
 	private DefaultTableModel tableModel = new DefaultTableModel(getPeripheralsData(), getPeripheralsFields()) {
 		private static final long serialVersionUID = 1L;
 		boolean[] columnEditables = new boolean[] { false, false, false, false, false };
@@ -43,8 +44,7 @@ public class ResultsTablePanel extends JPanel {
 	private ArrayList<String> peripheralsIds;
 	private MainWindow parentFrame;
 
-//	TODO To delete after transition
-	public void updateTable(ArrayList<Peripheral> peripherals) {
+	public void updateTable(List<Peripheral> peripherals) {
 		setPeripherals(peripherals);
 		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 		tableModel.setDataVector(getPeripheralsData(), getPeripheralsFields());
@@ -121,7 +121,7 @@ public class ResultsTablePanel extends JPanel {
 		return toObjectMatrix(this.getPeripherals());
 	}
 
-	private Object[][] toObjectMatrix(ArrayList<Peripheral> peripherals) {
+	private Object[][] toObjectMatrix(List<Peripheral> peripherals) {
 		Object[][] result = new Object[peripherals.size()][getPeripheralsFields().length];
 		for (int i = 0; i < result.length; i++) {
 			result[i] = peripherals.get(i).toObjectArray();

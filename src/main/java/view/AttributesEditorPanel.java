@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import enums.Window;
 import model.Peripheral;
+import utils.dbUtils;
 
 import java.awt.Dimension;
 
@@ -211,6 +212,9 @@ public class AttributesEditorPanel extends JPanel {
 		case "update":
 			btnAction.setText("Guardar");
 			break;
+		case "delete":
+			btnAction.setText("Eliminar");
+			break;
 		default:
 			btnAction.setText("Error");
 			break;
@@ -219,6 +223,8 @@ public class AttributesEditorPanel extends JPanel {
 
 	private void doAction(Window nextWindow) {
 //		Check fields are not empty
+		this.getPeripheral().setType(typeSelector.getSelectedType());
+		this.getPeripheral().setPrice(priceSelector.getPrice());
 		if (isFieldsEmpty()) {
 			JOptionPane.showMessageDialog(getParentFrame(), "Rellene todos los campos");
 			return;
@@ -228,7 +234,7 @@ public class AttributesEditorPanel extends JPanel {
 		case "create":
 			if (controller.create(this.getPeripheral()) != null) {
 				JOptionPane.showMessageDialog(getParentFrame(), "Periférico añadido correctamente");
-				this.getParentFrame().goToCard(nextWindow);
+				dbUtils.findAllAndUpdateTable(this.getParentFrame(), controller, nextWindow);
 			} else {
 				JOptionPane.showMessageDialog(getParentFrame(), "Error, compruebe que los datos son correctos");
 			}
@@ -237,7 +243,7 @@ public class AttributesEditorPanel extends JPanel {
 		case "update":
 			if (controller.update(this.getPeripheralId(), this.getPeripheral()) != null) {
 				JOptionPane.showMessageDialog(getParentFrame(), "Periférico actualizado correctamente");
-				this.getParentFrame().goToCard(nextWindow);
+				dbUtils.findAllAndUpdateTable(this.getParentFrame(), controller, nextWindow);
 			} else {
 				JOptionPane.showMessageDialog(getParentFrame(), "Error, compruebe que los datos son correctos");
 			}
@@ -246,7 +252,7 @@ public class AttributesEditorPanel extends JPanel {
 		case "delete":
 			if (controller.delete(this.getPeripheral(), this.getPeripheralId()) != null) {
 				JOptionPane.showMessageDialog(getParentFrame(), "Periférico eliminado correctamente");
-				this.getParentFrame().goToCard(nextWindow);
+				dbUtils.findAllAndUpdateTable(this.getParentFrame(), controller, nextWindow);
 			} else {
 				JOptionPane.showMessageDialog(getParentFrame(), "Error a la hora de eliminar el periférico");
 			}

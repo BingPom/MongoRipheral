@@ -12,8 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
@@ -69,9 +67,9 @@ public class FiltersPanel extends JPanel {
 		JButton btnSearch = new JButton("Buscar");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				Get peripheral and price range
-				Peripheral p = new Peripheral().builder().name(textFieldName.getText())
-						.type(typeSelector.getSelectedType()).brand(textFieldBrand.getText()).build();
+				// Get peripheral and price range
+				Peripheral p = Peripheral.builder().name(textFieldName.getText()).type(typeSelector.getSelectedType())
+						.brand(textFieldBrand.getText()).build();
 				double minPrice = priceRangeSelector.getMinPrice();
 				double maxPrice = priceRangeSelector.getMaxPrice();
 
@@ -79,22 +77,8 @@ public class FiltersPanel extends JPanel {
 					JOptionPane.showMessageDialog(parent,
 							"El tipo no puede estar vacío, escríbalo o seleccione otra opción.");
 				} else {
-//					TODO calls to controller and send results to next page
-					ArrayList<String> peripheralsIds = new ArrayList<String>();
-					peripheralsIds.add("1001");
-					peripheralsIds.add("2002");
-					ArrayList<Peripheral> peripherals = new ArrayList<Peripheral>();
-					peripherals.add(Peripheral.builder().name("Teclado1").type("Teclado").brand("Marca1").price(100d)
-							.description("Es un teclado 1").build());
-					peripherals.add(Peripheral.builder().name("Cascos1").type("Cascosasdsad").brand("Marca2")
-							.price(200d).description("Es un casco 1").attributes(new HashMap<String, String>() {
-								{
-									put("att1", "valor1");
-								}
-							}).build());
 					ResultsTablePanel n = (ResultsTablePanel) parent.getClassByWindow(nextPage);
-					n.updateTable(peripherals);
-					n.setPeripheralsIds(peripheralsIds);
+					n.updateTable(controller.filteredSearch(p, minPrice, maxPrice));
 					parent.goToCard(nextPage);
 				}
 			}
@@ -120,7 +104,7 @@ public class FiltersPanel extends JPanel {
 		add(textFieldBrand);
 		textFieldBrand.setColumns(10);
 	}
-	
+
 	public void resetFields() {
 		textFieldName.setText("");
 		textFieldBrand.setText("");
