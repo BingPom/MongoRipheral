@@ -33,9 +33,14 @@ public abstract class AbstractPeripheralController implements IPeripheralControl
 		return collection.insertOne(document);
 	}
 
-	public void update(String name, Peripheral updatedPeripheral) {
-		collection.updateOne(Filters.eq("name", name), new Document("$set",
-				new Document("price", updatedPeripheral.getPrice()).append("brand", updatedPeripheral.getBrand())));
+	public void update(String id, Peripheral updatedPeripheral) {
+		collection.updateOne(Filters.and(Filters.eq("id", id)),
+				new Document("$set",
+						new Document("name", updatedPeripheral.getName()).append("price", updatedPeripheral.getPrice())
+								.append("brand", updatedPeripheral.getBrand())
+								.append("description", updatedPeripheral.getDescription())
+								.append("type", updatedPeripheral.getType())
+								.append("attributes", updatedPeripheral.getAttributes())));
 	}
 
 	@Override
@@ -61,13 +66,16 @@ public abstract class AbstractPeripheralController implements IPeripheralControl
 	}
 
 	@Override
-	public List<Peripheral> findAll() {
-		List<Peripheral> peripherals = new ArrayList<>();
+	public HashMap<String, Peripheral> findAll() {
+		// List<String> peripheralId = new ArrayList<>();
+		HashMap<String, Peripheral> peripherals = new HashMap<String, Peripheral>();
+
 		MongoIterable<String> collectionNames = MongoDriver.getDatabase().listCollectionNames();
 
 		for (String collectionName : collectionNames) {
 			collection = MongoDriver.getDatabase().getCollection(collectionName);
-			collection.find().forEach(document -> peripherals.add(documentToPeripheral(document)));
+			collection.find()
+					.forEach(document -> peripherals.put(document.getString("_id"), documentToPeripheral(document)));
 		}
 
 		return peripherals;

@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.bson.Document;
@@ -21,7 +22,7 @@ public interface IPeripheralController {
 	 * 
 	 * @return A list containing all the peripherals
 	 */
-	public List<Peripheral> findAll();
+	public HashMap<String, Peripheral> findAll();
 
 	/**
 	 * Get all the peripheral that matches the given String
