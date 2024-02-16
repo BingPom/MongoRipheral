@@ -42,7 +42,16 @@ public class AttributesEditorPanel extends JPanel {
 	private MainWindow parentFrame;
 	private JTextField textFieldDescription;
 	private String peripheralId;
+	private String initialType;
 	private PeripheralController controller = new PeripheralController();
+	public String getInitialType() {
+		return initialType;
+	}
+
+	public void setInitialType(String initialType) {
+		this.initialType = initialType;
+	}
+
 
 	public String getPeripheralId() {
 		return peripheralId;
@@ -73,6 +82,7 @@ public class AttributesEditorPanel extends JPanel {
 	}
 
 	public void setPeripheral(Peripheral peripheral) {
+		this.setInitialType(peripheral.getType());
 		this.peripheral = peripheral;
 		textFieldName.setText(peripheral.getName() == null ? "" : this.getPeripheral().getName());
 		typeSelector.updateType(peripheral.getType() == null ? "Teclado" : this.getPeripheral().getType());
@@ -223,12 +233,12 @@ public class AttributesEditorPanel extends JPanel {
 
 	private void doAction(Window nextWindow) {
 //		Check fields are not empty
-		this.getPeripheral().setType(typeSelector.getSelectedType());
-		this.getPeripheral().setPrice(priceSelector.getPrice());
 		if (isFieldsEmpty()) {
 			JOptionPane.showMessageDialog(getParentFrame(), "Rellene todos los campos");
 			return;
 		}
+		this.getPeripheral().setType(typeSelector.getSelectedType());
+		this.getPeripheral().setPrice(priceSelector.getPrice());
 		this.getPeripheral().setAttributes(attEditor.getAttributesHashMap());
 		switch (this.getMode()) {
 		case "create":
@@ -241,7 +251,7 @@ public class AttributesEditorPanel extends JPanel {
 			break;
 
 		case "update":
-			if (controller.update(this.getPeripheralId(), this.getPeripheral()) != null) {
+			if (controller.update(this.getPeripheralId(), this.getPeripheral(), this.getInitialType()) != null) {
 				JOptionPane.showMessageDialog(getParentFrame(), "Periférico actualizado correctamente");
 				dbUtils.findAllAndUpdateTable(this.getParentFrame(), controller, nextWindow);
 			} else {

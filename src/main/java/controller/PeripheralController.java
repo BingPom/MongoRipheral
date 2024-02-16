@@ -94,20 +94,30 @@ public class PeripheralController extends AbstractPeripheralController {
 		collection.find(filter).forEach(document -> peripherals.add(documentToPeripheral(document)));
 	}
 
-	public Object update(String id, Peripheral peripheral) {
-		getPeripheralCollection(peripheral);
-
-		return super.update(id, peripheral);
-
+	public Object update(String id, Peripheral peripheral, String initialType) {
+		if (peripheral.getType().equalsIgnoreCase(initialType)) {
+			getPeripheralCollection(peripheral);
+			return super.update(id, peripheral);
+		} else {
+			getPeripheralCollection(peripheral.getType());
+			if (insert(peripheral) != null) {
+				getPeripheralCollection(initialType);
+				return super.delete(id);
+			}
+			return null;
+		}
 	}
 
 	public Object delete(Peripheral peripheral, String id) {
 		getPeripheralCollection(peripheral);
 
-		return super.delete(peripheral.getName(), id);
+		return super.delete(id);
 	}
 
 	private void getPeripheralCollection(Peripheral peripheral) {
 		collection = MongoDriver.getDatabase().getCollection(peripheral.getType());
+	}
+	private void getPeripheralCollection(String type) {
+		collection = MongoDriver.getDatabase().getCollection(type);
 	}
 }

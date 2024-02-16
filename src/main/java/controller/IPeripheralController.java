@@ -48,7 +48,7 @@ public interface IPeripheralController {
 	 * @param id   The id of the peripheral to be deleted
 	 * @return 
 	 */
-	public Object delete(String name, String id);
+	public Object delete(String id);
 
 	/**
 	 * A help method to translate a Document from database into a Peripheral object

@@ -55,8 +55,8 @@ public abstract class AbstractPeripheralController implements IPeripheralControl
 	}
 
 	@Override
-	public Object delete(String name, String id) {
-		return collection.deleteOne(Filters.and(Filters.eq("_id", new ObjectId(id)), Filters.eq("name", name)));
+	public Object delete(String id) {
+		return collection.deleteOne(Filters.and(Filters.eq("_id", new ObjectId(id))));
 	}
 
 	@Override
